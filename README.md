@@ -1,5 +1,6 @@
 # Operacion-temazo
 Panel interactivo para la valoración de canciones de la gala Operación Temazo 1. Incluye sistema de puntuación automática, gestión de pases de oro y letras de canciones
+https://rubenillob-dot.github.io/Operacion-temazo/
 # 🎤 Operación Temazo 1 - Panel de Valoración
 
 Panel interactivo desarrollado para la gestión de la primera fase de **Operación Temazo**. Este sistema permite al jurado y al público valorar las canciones en tiempo real.
