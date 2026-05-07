@@ -1,0 +1,520 @@
+/* === ESTILOS GLOBALES === */
+:root {
+    --bg-page: #0b1411; 
+    --bg-card: #142721; 
+    --bg-player: #0a1411; 
+    --text-main: #ffffff;
+    --text-muted: #8b9d96;
+    --yellow-btn: #d6a11e;
+    --purple-glow: #9d4edd;
+    --twitch-color: #9146FF;
+}
+
+body {
+    background-color: var(--bg-page);
+    color: var(--text-main);
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 20px;
+    overflow-x: hidden; 
+}
+
+header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding-top: 20px;
+}
+
+header h1 {
+    color: #1ed760; 
+    font-size: 3rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin: 0;
+    text-shadow: 0 0 15px rgba(30, 215, 96, 0.4);
+}
+
+/* === GRID DE CANCIONES === */
+.grid-canciones {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+    gap: 20px;
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+/* === TARJETAS === */
+.card {
+    background-color: var(--bg-card);
+    border: 2px solid transparent;
+    border-radius: 12px;
+    height: 195px;
+    position: relative;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+/* Estado: Reproduciendo (Resplandor morado) */
+.card.playing {
+    border-color: var(--purple-glow);
+    box-shadow: 0 0 25px rgba(157, 78, 221, 0.6), inset 0 0 10px rgba(157, 78, 221, 0.3);
+}
+
+/* === ESTADO 1: OCULTO === */
+.state-hidden {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.music-icon-big {
+    font-size: 3.5rem;
+    color: #1a332b; 
+}
+
+.btn-reveal {
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+    background-color: var(--yellow-btn);
+    color: #000;
+    border: none;
+    border-radius: 6px;
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s;
+}
+
+.btn-reveal:hover { transform: scale(1.1); }
+
+/* === ESTADO 2: REVELADO === */
+.state-revealed {
+    padding: 15px;
+    height: 100%;
+    box-sizing: border-box;
+    display: flex;
+    gap: 15px;
+}
+
+/* Carátula */
+.caratula {
+    width: 146px;
+    height: 146px;
+    border-radius: 8px;
+    object-fit: cover;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+/* Contenido derecho */
+.card-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.author-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.author-avatar {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+
+.song-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 2px 0 8px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Reproductor falso visual */
+.player-ui {
+    background-color: var(--bg-player);
+    border-radius: 6px;
+    padding: 6px 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+}
+
+.play-btn {
+    background: none;
+    border: none;
+    color: var(--text-main);
+    font-size: 1.1rem;
+    cursor: pointer;
+}
+
+.play-btn:hover { color: #1ed760; }
+
+.timeline {
+    flex-grow: 1;
+    height: 4px;
+    background-color: #2a3b35;
+    border-radius: 2px;
+    position: relative;
+}
+
+.timeline-progress {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: #1ed760;
+    border-radius: 2px;
+}
+
+.time-text { font-size: 0.75rem; color: var(--text-muted); }
+
+/* Fila de puntuaciones y Twitch */
+.scoring-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-yellow-small {
+    background-color: var(--yellow-btn);
+    border: none;
+    border-radius: 4px;
+    height: 32px;
+    width: 32px;
+    cursor: pointer;
+    color: #000;
+}
+
+.score-input-group {
+    display: flex;
+    gap: 4px;
+    flex-grow: 1;
+}
+
+.score-input {
+    width: 100%;
+    background-color: var(--bg-player);
+    border: 1px solid #2a3b35;
+    border-radius: 4px;
+    color: white;
+    text-align: center;
+    height: 32px;
+    font-size: 0.9rem;
+    font-family: 'Inter', sans-serif;
+}
+
+.score-input::placeholder { color: #4a5c55; }
+
+.btn-twitch {
+    background-color: var(--twitch-color);
+    border: none;
+    border-radius: 4px;
+    height: 32px;
+    width: 36px;
+    color: white;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.2s;
+}
+
+.btn-twitch:hover { background-color: #772ce8; }
+
+.final-score {
+    background-color: var(--bg-player);
+    border: 1px solid #2a3b35;
+    border-radius: 4px;
+    height: 32px;
+    min-width: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.intro-section {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto 60px auto;
+    font-family: 'Inter', sans-serif;
+    color: #e0e6ed;
+}
+
+/* Control de Volumen */
+.top-controls {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 10px 20px;
+    margin-bottom: 40px;
+}
+
+.volume-slider-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.7);
+}
+
+.volume-slider {
+    width: 150px;
+    height: 4px;
+    -webkit-appearance: none;
+    background: rgba(255,255,255,0.2);
+    border-radius: 2px;
+    outline: none;
+}
+
+.volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 12px;
+    height: 20px;
+    background: #fff;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+/* Títulos Naranjas */
+.orange-title {
+    color: #ff6a33;
+    font-size: 2.2rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 30px;
+    font-weight: 800;
+}
+
+/* Lista de Reglas */
+.rules-container {
+    background-color: #04241b; /* Verde oscuro de la captura */
+    padding: 40px;
+    border-radius: 12px;
+    margin-bottom: 40px;
+}
+
+.custom-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.custom-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    margin-bottom: 25px;
+    font-size: 1.1rem;
+    line-height: 1.5;
+}
+
+.icon-bullet {
+    color: #8b9d96;
+    margin-top: 4px;
+    font-size: 1.2rem;
+    transform: rotate(-45deg); /* Inclinación ligera del micro como en la imagen */
+}
+
+.custom-list strong {
+    color: #fff;
+    font-weight: 700;
+}
+
+.indent-text {
+    margin-left: 20px;
+    display: inline-block;
+    margin-top: 5px;
+}
+
+/* Contenedor de Créditos */
+.credits-container {
+    background-color: #04241b;
+    padding: 40px;
+    border-radius: 12px;
+}
+
+.credit-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.credit-item {
+    background-color: #0a3328; /* Verde ligeramente más claro para las cajas */
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    border-radius: 8px;
+    transition: transform 0.2s;
+}
+
+.credit-item:hover {
+    transform: translateX(5px);
+}
+
+.credit-icon {
+    width: 35px;
+    height: 35px;
+    border-radius: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 20px;
+    color: white;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+
+.credit-text {
+    font-size: 1.05rem;
+}
+
+.credit-text strong {
+    color: #fff;
+    margin-right: 5px;
+}
+
+.sub-text {
+    font-size: 0.9rem;
+    color: #fbc02d; 
+    display: block;
+    margin-top: 4px;
+    font-style: italic;
+}
+
+/* =========================================
+   NUEVOS ESTILOS: TICKET DORADO Y TÍTULOS
+   ========================================= */
+
+.card-header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.song-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin: 5px 0 10px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #fbc02d; /* Título en amarillo/dorado como en la captura */
+}
+
+/* Botón Pase de Oro (Ticket) */
+.btn-golden-ticket {
+    background-color: #1a1a1a;
+    color: #fbc02d;
+    border: 1px solid #fbc02d;
+    border-radius: 6px;
+    padding: 6px 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+}
+
+/* Estado Activo del Pase de Oro */
+.btn-golden-ticket.active {
+    background-color: #fbc02d;
+    color: #000;
+    box-shadow: 0 0 12px rgba(251, 192, 45, 0.6);
+    transform: scale(1.1);
+}
+
+/* =========================================
+   NUEVOS ESTILOS: MODAL DE LA LETRA
+   ========================================= */
+
+.modal-overlay {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1000; /* Asegura que esté por encima de todo */
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    background-color: #0a3328; /* Verde oscuro acorde a la captura */
+    border-radius: 12px;
+    padding: 30px 40px;
+    width: 90%;
+    max-width: 550px;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+    border: 1px solid rgba(30, 215, 96, 0.2);
+}
+
+.close-modal {
+    position: absolute;
+    top: 15px; 
+    right: 20px;
+    background: none; 
+    border: none;
+    color: #8b9d96; 
+    font-size: 1.5rem; 
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.close-modal:hover {
+    color: #fff;
+}
+
+.modal-title {
+    text-align: center; 
+    color: #1ed760; 
+    margin-top: 0;
+    margin-bottom: 25px;
+    font-size: 1.6rem;
+}
+
+.modal-lyrics {
+    overflow-y: auto; 
+    text-align: center; 
+    color: #fff;
+    padding-right: 15px; 
+    line-height: 1.8;
+    font-size: 1.05rem;
+}
+
+/* Estilizar la barra de scroll de la letra */
+.modal-lyrics::-webkit-scrollbar { 
+    width: 6px; 
+}
+.modal-lyrics::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+}
+.modal-lyrics::-webkit-scrollbar-thumb { 
+    background: #e0e6ed; 
+    border-radius: 10px; 
+}
