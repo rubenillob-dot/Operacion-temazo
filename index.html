@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tmi.js/1.8.5/tmi.min.js"></script>
+
 </head>
 
 <body>
@@ -30,15 +30,17 @@
             <ul class="custom-list">
                 <li><i class="fa-solid fa-microphone-lines icon-bullet"></i><span>En esta fase se escucharán y valorarán
                         <strong>todas las canciones</strong> que participan en Operación Temazo 1</span></li>
-                <li><i class="fa-solid fa-microphone-lines icon-bullet"></i><span>Cada canción será puntuada de
-                        <strong>0 a 10</strong> por el jurado y por el público, siendo su puntuación total:<br><br><span
-                            class="indent-text"><strong>75% Jurado</strong> (Ari 50% y Luismi 25%)</span><br><span
-                            class="indent-text"><strong>25% público</strong></span></span></li>
+                <li>
+                    <i class="fa-solid fa-microphone-lines icon-bullet"></i>
+                    <span>Cada canción será puntuada de <strong>0 a 10</strong> por el jurado, siendo su puntuación
+                        total:
+                        <br><br>
+                        <span class="indent-text"><strong>100% Jurado</strong> (Ari 50% y Luismi 50%)</span>
+                    </span>
+                </li>
                 <li><i class="fa-solid fa-microphone-lines icon-bullet"></i><span>Cada miembro del jurado tiene
-                        <strong>un pase de oro <i class="fa-solid fa-ticket"></i></strong>, que usará para pasar
+                        <strong>un pase de oro <i class="fa-solid fa-ticket"></i></strong>, (el chat tambien se tendra que poner de acuerdo para dar un tickect dorado)que usará para pasar
                         directamente una canción a la <strong>fase final</strong></span></li>
-                <li><i class="fa-solid fa-microphone-lines icon-bullet"></i><span>La puntuación del público <strong>no
-                            se revelará</strong> hasta que termine la primera fase</span></li>
                 <li><i class="fa-solid fa-microphone-lines icon-bullet"></i><span>Al terminar esta primera fase, las
                         <strong>5 canciones mejor puntuadas</strong> y las <strong>3 canciones que tengan el pase de oro
                             <i class="fa-solid fa-ticket"></i></strong> pasarán a la <strong>fase final</strong></span>
@@ -114,8 +116,6 @@
                             <input type="number" placeholder="Luismi" class="score-input" min="0" max="10"
                                 oninput="actualizarNotaMedia('1')">
                         </div>
-                        <button class="btn-twitch" title="Pedir nota al chat" onclick="abrirVotacionTwitch('1')"><i
-                                class="fa-brands fa-twitch"></i></button>
                         <div class="final-score" id="finalScore1">-</div>
                     </div>
                 </div>
@@ -153,8 +153,7 @@
                             <input type="number" placeholder="Luismi" class="score-input" min="0" max="10"
                                 oninput="actualizarNotaMedia('2')">
                         </div>
-                        <button class="btn-twitch" onclick="abrirVotacionTwitch('2')"><i
-                                class="fa-brands fa-twitch"></i></button>
+
                         <div class="final-score" id="finalScore2">-</div>
                     </div>
                 </div>
@@ -192,8 +191,7 @@
                             <input type="number" placeholder="Luismi" class="score-input" min="0" max="10"
                                 oninput="actualizarNotaMedia('3')">
                         </div>
-                        <button class="btn-twitch" onclick="abrirVotacionTwitch('3')"><i
-                                class="fa-brands fa-twitch"></i></button>
+
                         <div class="final-score" id="finalScore3">-</div>
                     </div>
                 </div>
@@ -231,8 +229,7 @@
                             <input type="number" placeholder="Luismi" class="score-input" min="0" max="10"
                                 oninput="actualizarNotaMedia('4')">
                         </div>
-                        <button class="btn-twitch" onclick="abrirVotacionTwitch('4')"><i
-                                class="fa-brands fa-twitch"></i></button>
+
                         <div class="final-score" id="finalScore4">-</div>
                     </div>
                 </div>
@@ -270,8 +267,7 @@
                             <input type="number" placeholder="Luismi" class="score-input" min="0" max="10"
                                 oninput="actualizarNotaMedia('5')">
                         </div>
-                        <button class="btn-twitch" onclick="abrirVotacionTwitch('5')"><i
-                                class="fa-brands fa-twitch"></i></button>
+
                         <div class="final-score" id="finalScore5">-</div>
                     </div>
                 </div>
@@ -309,8 +305,7 @@
                             <input type="number" placeholder="Luismi" class="score-input" min="0" max="10"
                                 oninput="actualizarNotaMedia('6')">
                         </div>
-                        <button class="btn-twitch" onclick="abrirVotacionTwitch('6')"><i
-                                class="fa-brands fa-twitch"></i></button>
+
                         <div class="final-score" id="finalScore6">-</div>
                     </div>
                 </div>
@@ -348,8 +343,7 @@
                             <input type="number" placeholder="Luismi" class="score-input" min="0" max="10"
                                 oninput="actualizarNotaMedia('7')">
                         </div>
-                        <button class="btn-twitch" onclick="abrirVotacionTwitch('7')"><i
-                                class="fa-brands fa-twitch"></i></button>
+
                         <div class="final-score" id="finalScore7">-</div>
                     </div>
                 </div>
@@ -387,8 +381,7 @@
                             <input type="number" placeholder="Luismi" class="score-input" min="0" max="10"
                                 oninput="actualizarNotaMedia('8')">
                         </div>
-                        <button class="btn-twitch" onclick="abrirVotacionTwitch('8')"><i
-                                class="fa-brands fa-twitch"></i></button>
+
                         <div class="final-score" id="finalScore8">-</div>
                     </div>
                 </div>
@@ -426,8 +419,7 @@
                             <input type="number" placeholder="Luismi" class="score-input" min="0" max="10"
                                 oninput="actualizarNotaMedia('9')">
                         </div>
-                        <button class="btn-twitch" onclick="abrirVotacionTwitch('9')"><i
-                                class="fa-brands fa-twitch"></i></button>
+
                         <div class="final-score" id="finalScore9">-</div>
                     </div>
                 </div>
@@ -465,8 +457,7 @@
                             <input type="number" placeholder="Luismi" class="score-input" min="0" max="10"
                                 oninput="actualizarNotaMedia('10')">
                         </div>
-                        <button class="btn-twitch" onclick="abrirVotacionTwitch('10')"><i
-                                class="fa-brands fa-twitch"></i></button>
+
                         <div class="final-score" id="finalScore10">-</div>
                     </div>
                 </div>
@@ -504,8 +495,7 @@
                             <input type="number" placeholder="Luismi" class="score-input" min="0" max="10"
                                 oninput="actualizarNotaMedia('11')">
                         </div>
-                        <button class="btn-twitch" onclick="abrirVotacionTwitch('11')"><i
-                                class="fa-brands fa-twitch"></i></button>
+
                         <div class="final-score" id="finalScore11">-</div>
                     </div>
                 </div>
@@ -543,8 +533,7 @@
                             <input type="number" placeholder="Luismi" class="score-input" min="0" max="10"
                                 oninput="actualizarNotaMedia('12')">
                         </div>
-                        <button class="btn-twitch" onclick="abrirVotacionTwitch('12')"><i
-                                class="fa-brands fa-twitch"></i></button>
+
                         <div class="final-score" id="finalScore12">-</div>
                     </div>
                 </div>
@@ -582,8 +571,7 @@
                             <input type="number" placeholder="Luismi" class="score-input" min="0" max="10"
                                 oninput="actualizarNotaMedia('13')">
                         </div>
-                        <button class="btn-twitch" onclick="abrirVotacionTwitch('13')"><i
-                                class="fa-brands fa-twitch"></i></button>
+
                         <div class="final-score" id="finalScore13">-</div>
                     </div>
                 </div>
@@ -621,8 +609,7 @@
                             <input type="number" placeholder="Luismi" class="score-input" min="0" max="10"
                                 oninput="actualizarNotaMedia('14')">
                         </div>
-                        <button class="btn-twitch" onclick="abrirVotacionTwitch('14')"><i
-                                class="fa-brands fa-twitch"></i></button>
+
                         <div class="final-score" id="finalScore14">-</div>
                     </div>
                 </div>
@@ -660,8 +647,7 @@
                             <input type="number" placeholder="Luismi" class="score-input" min="0" max="10"
                                 oninput="actualizarNotaMedia('15')">
                         </div>
-                        <button class="btn-twitch" onclick="abrirVotacionTwitch('15')"><i
-                                class="fa-brands fa-twitch"></i></button>
+
                         <div class="final-score" id="finalScore15">-</div>
                     </div>
                 </div>
@@ -677,9 +663,11 @@
                         puntuadas</strong> y las <strong>3 canciones que tengan el pase de oro <i
                             class="fa-solid fa-ticket" style="color: #fbc02d;"></i></strong> se enfrentarán en una
                     eliminatoria</span></li>
-            <li><i class="fa-solid fa-microphone icon-bullet"></i><span>En cada enfrentamiento, el <strong>jurado junto al chat
-                        decidirá la canción ganadora mediante encuestas de A o B</strong>, la cual avanzará al siguiente enfrentamiento</span></li>
-            
+            <li><i class="fa-solid fa-microphone icon-bullet"></i><span>En cada enfrentamiento, el <strong>jurado junto
+                        al chat
+                        decidirá la canción ganadora mediante encuestas de A o B</strong>, la cual avanzará al siguiente
+                    enfrentamiento</span></li>
+
         </ul>
         <div class="btn-container">
             <button class="btn-outline-blue" onclick="empezarFaseFinal()">EMPEZAR FASE FINAL</button>
@@ -776,25 +764,6 @@
         </div>
     </div>
 
-    <div id="twitchModal" class="modal-overlay">
-        <div class="modal-content"
-            style="background: transparent; border: none; box-shadow: none; display: flex; flex-direction: column; align-items: center; gap: 20px;">
-            <button class="close-modal" onclick="cerrarTwitch()" style="position: relative; top: 0; right: -200px;"><i
-                    class="fa-solid fa-xmark"></i></button>
-            <div class="timer-circle-large"><i class="fa-solid fa-clock"
-                    style="font-size: 1rem; margin-right: 5px; color: #8b9d96;"></i><span id="twitchTimer">30</span>
-            </div>
-            <div class="vote-showcase-box">
-                <div class="vote-showcase-header">
-                    <span id="badgeSub" class="badge-sub" style="display: none;">Sub</span>
-                    <span id="showcaseUser" class="showcase-user">Esperando chat...</span>
-                </div>
-                <div id="showcaseScore" class="showcase-score">-</div>
-                <div class="votos-counter"><i class="fa-brands fa-twitch"></i> Votos: <span id="totalVotes">0</span>
-                </div>
-            </div>
-        </div>
-    </div>
     <div id="winnerModal" class="modal-overlay winner-bg">
         <div class="modal-content winner-content-box">
             <button class="close-modal" onclick="cerrarGanador()"><i class="fa-solid fa-xmark"></i></button>

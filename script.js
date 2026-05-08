@@ -1,10 +1,5 @@
 // === VARIABLES GLOBALES ===
 let cancionSonandoId = null;
-let notasSecretasPublico = {};
-let isVotingActive = false;
-let currentVotingSongId = null;
-let currentVotes = {};
-let votingTimer = null;
 
 // === INICIALIZACIÓN DEL REPRODUCTOR DE AUDIO ===
 document.addEventListener('DOMContentLoaded', () => {
@@ -155,13 +150,16 @@ window.onclick = function (event) {
     if (event.target == modalGanador) cerrarGanador();
 }
 
+// === ACTUALIZAR NOTAS (50% Ari / 50% Luismi) ===
 function actualizarNotaMedia(id) {
     const card = document.getElementById('cancion' + id);
     if(card) {
         const inputs = card.querySelectorAll('.score-input');
         const ari = parseFloat(inputs[0].value) || 0;
         const luismi = parseFloat(inputs[1].value) || 0;
-        const final = ((ari * 0.5) + (luismi * 0.25)).toFixed(1); 
+        
+        // Nueva fórmula: 50% para cada uno
+        const final = ((ari * 0.5) + (luismi * 0.5)).toFixed(1); 
         card.querySelector('.final-score').innerText = final;
     }
 }
@@ -193,9 +191,9 @@ function empezarFaseFinal() {
         let inputs = card.querySelectorAll('.score-input');
         let notaAri = inputs[0] ? (parseFloat(inputs[0].value) || 0) : 0;
         let notaLuismi = inputs[1] ? (parseFloat(inputs[1].value) || 0) : 0;
-        let notaPublico = notasSecretasPublico[i] || 0;
-
-        let notaFinal = (notaAri * 0.5) + (notaLuismi * 0.25) + (notaPublico * 0.25);
+        
+        // Nueva fórmula: 50% Ari + 50% Luismi
+        let notaFinal = (notaAri * 0.5) + (notaLuismi * 0.5);
 
         let datosCancion = { titulo, autor, imagenSrc, audioSrc, nota: notaFinal, id: i };
 
@@ -289,8 +287,6 @@ function declararVencedor(datosHtmlNode, idCajaDestino) {
     
     if(idCajaDestino === 'campeon') {
         cajaDestino.classList.add('winner-box');
-        
-        // Disparar pantalla del gran ganador después de 1 segundo de ganar la batalla final
         setTimeout(() => {
             abrirGanador(datosParaPintar);
         }, 1000);
@@ -301,14 +297,12 @@ function declararVencedor(datosHtmlNode, idCajaDestino) {
 
 // === LÓGICA DE PANTALLA GANADOR FINAL ===
 function abrirGanador(datos) {
-    // Parar la canción que estuviera sonando
     if (cancionSonandoId !== null) {
         let audioFondo = document.getElementById('audio' + cancionSonandoId);
         if (audioFondo) audioFondo.pause();
         cancionSonandoId = null;
     }
 
-    // Rellenar datos
     document.getElementById('winnerImg').src = datos.imagenSrc;
     document.getElementById('winnerTitle').innerText = datos.titulo;
     document.getElementById('winnerAuthor').innerText = datos.autor;
@@ -316,7 +310,7 @@ function abrirGanador(datos) {
     let audioGanador = document.getElementById('winnerAudio');
     if (datos.audioSrc) {
         audioGanador.src = datos.audioSrc;
-        audioGanador.play(); // Que empiece a sonar automáticamente su temazo!
+        audioGanador.play();
     } else {
         audioGanador.removeAttribute('src');
     }
@@ -329,124 +323,4 @@ function cerrarGanador() {
     let audioGanador = document.getElementById('winnerAudio');
     audioGanador.pause();
     audioGanador.currentTime = 0;
-}
-
-// =========================================================================
-// === LÓGICA DE TWITCH DEFINITIVA ===
-// =========================================================================
-
-// Configuración del cliente (el canal SIEMPRE en minúsculas)
-const client = new tmi.Client({
-    options: { debug: false },
-    connection: { reconnect: true, secure: true },
-    channels: ['imarixu']
-});
-
-// Conectamos a Twitch de forma segura
-client.connect()
-    .then(() => console.log("[TWITCH] Conectado exitosamente al canal de imarixu"))
-    .catch(e => console.error("[ERROR TWITCH] No se pudo conectar:", e));
-
-// Leer el chat en tiempo real
-client.on('message', (channel, tags, message, self) => {
-    // Si no le hemos dado al botón morado de Twitch (los 30 segundos), ignoramos el chat
-    if (self || !isVotingActive) return;
-
-    // Buscamos un número del 0 al 10 en el mensaje (acepta decimales como 8.5 o 8,5)
-    // Se asegura de no coger números que sean parte de otras cifras (ej: ignora un "11" o "100")
-    const match = message.match(/\b(10(\.0+)?|[0-9]([.,][0-9]+)?)\b/);
-    
-    if (match) {
-        const voto = parseFloat(match[0].replace(',', '.'));
-        
-        // Filtro de seguridad para asegurar que la nota es entre 0 y 10
-        if (voto >= 0 && voto <= 10) {
-            const username = tags['display-name'] || tags.username;
-            
-            // Detectamos si es Subscriptor, Moderador o Fundador
-            let isSub = !!(tags.subscriber || tags.mod || (tags.badges && tags.badges.founder));
-            
-            // Solo permitimos 1 voto por persona en cada ronda
-            if (currentVotes[username] === undefined) {
-                currentVotes[username] = voto;
-                mostrarVotoEnPantalla(username, voto, isSub);
-            }
-        }
-    }
-});
-
-function abrirVotacionTwitch(id) {
-    document.getElementById('twitchModal').style.display = 'flex';
-    document.getElementById('showcaseUser').innerText = 'Esperando chat...';
-    document.getElementById('showcaseScore').innerText = '-';
-    document.getElementById('totalVotes').innerText = '0';
-    document.getElementById('badgeSub').style.display = 'none';
-    document.getElementById('twitchTimer').innerText = '30';
-    
-    currentVotingSongId = id;
-    currentVotes = {};
-    isVotingActive = true; // ACTIVA EL MODO "ESCUCHAR CHAT"
-    
-    let tiempoRestante = 30;
-    if (votingTimer) clearInterval(votingTimer);
-    
-    votingTimer = setInterval(() => {
-        tiempoRestante--;
-        document.getElementById('twitchTimer').innerText = tiempoRestante;
-        if (tiempoRestante <= 0) finalizarVotacion();
-    }, 1000);
-}
-
-function mostrarVotoEnPantalla(username, voto, isSub) {
-    // Actualizamos el centro del modal con el último usuario que ha votado
-    document.getElementById('showcaseUser').innerText = username;
-    document.getElementById('showcaseScore').innerText = voto;
-    document.getElementById('badgeSub').style.display = isSub ? 'inline-block' : 'none';
-    
-    // Actualizamos el contador total de votos
-    document.getElementById('totalVotes').innerText = Object.keys(currentVotes).length;
-}
-
-function finalizarVotacion() {
-    clearInterval(votingTimer);
-    isVotingActive = false; // APAGA EL MODO "ESCUCHAR CHAT"
-    document.getElementById('twitchTimer').innerText = '0';
-    
-    // Calculamos la nota media de todos los votos recogidos
-    const arrayVotos = Object.values(currentVotes);
-    let media = 0;
-    if (arrayVotos.length > 0) {
-        const suma = arrayVotos.reduce((a, b) => a + b, 0);
-        media = (suma / arrayVotos.length).toFixed(1);
-    }
-    
-    // Guardamos la media en secreto para la fase final
-    notasSecretasPublico[currentVotingSongId] = parseFloat(media);
-    
-    document.getElementById('showcaseUser').innerText = 'Votación Cerrada';
-    document.getElementById('showcaseScore').innerText = '🔒';
-    document.getElementById('badgeSub').style.display = 'none';
-    
-    // Actualizamos visualmente el frontend para sumar la nota de Ari, Luismi y el Chat
-    const card = document.getElementById('cancion' + currentVotingSongId);
-    if(card) {
-        const inputs = card.querySelectorAll('.score-input');
-        const ari = parseFloat(inputs[0].value) || 0;
-        const luismi = parseFloat(inputs[1].value) || 0;
-        const finalCalculado = ((ari * 0.5) + (luismi * 0.25) + (parseFloat(media) * 0.25)).toFixed(1);
-        card.querySelector('.final-score').innerText = finalCalculado;
-    }
-
-    // Cerramos la ventana después de 3 segundos y ponemos el botón verde
-    setTimeout(() => {
-        cerrarTwitch();
-        const botonTwitch = document.querySelector(`#cancion${currentVotingSongId} .btn-twitch`);
-        if(botonTwitch) botonTwitch.style.backgroundColor = '#1ed760';
-    }, 3000);
-}
-
-function cerrarTwitch() {
-    document.getElementById('twitchModal').style.display = 'none';
-    clearInterval(votingTimer);
-    isVotingActive = false;
 }

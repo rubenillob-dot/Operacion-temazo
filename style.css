@@ -7,7 +7,6 @@
     --text-muted: #8b9d96;
     --yellow-btn: #d6a11e;
     --purple-glow: #9d4edd;
-    --twitch-color: #9146FF;
 }
 
 body {
@@ -43,6 +42,7 @@ header h1 {
     margin: 0 auto;
 }
 
+/* === TARJETAS === */
 .card {
     background-color: var(--bg-card);
     border: 2px solid transparent;
@@ -59,6 +59,7 @@ header h1 {
     box-shadow: 0 0 25px rgba(157, 78, 221, 0.6), inset 0 0 10px rgba(157, 78, 221, 0.3);
 }
 
+/* === ESTADO 1: OCULTO === */
 .state-hidden {
     display: flex;
     align-items: center;
@@ -97,6 +98,7 @@ header h1 {
     transform: scale(1.1);
 }
 
+/* === ESTADO 2: REVELADO === */
 .state-revealed {
     padding: 15px;
     height: 100%;
@@ -172,6 +174,7 @@ header h1 {
     background-color: #2a3b35;
     border-radius: 2px;
     position: relative;
+    cursor: pointer;
 }
 
 .timeline-progress {
@@ -181,6 +184,7 @@ header h1 {
     height: 100%;
     background-color: #1ed760;
     border-radius: 2px;
+    pointer-events: none;
 }
 
 .time-text {
@@ -224,21 +228,6 @@ header h1 {
 
 .score-input::placeholder {
     color: #4a5c55;
-}
-
-.btn-twitch {
-    background-color: var(--twitch-color);
-    border: none;
-    border-radius: 4px;
-    height: 32px;
-    width: 36px;
-    color: white;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-
-.btn-twitch:hover {
-    background-color: #772ce8;
 }
 
 .final-score {
@@ -499,80 +488,6 @@ header h1 {
     border-radius: 10px;
 }
 
-/* === MODAL TWITCH === */
-.timer-circle-large {
-    width: 110px;
-    height: 110px;
-    border-radius: 50%;
-    border: 6px solid #6edbca;
-    background-color: #0b1411;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 3rem;
-    font-weight: bold;
-    box-shadow: 0 0 20px rgba(110, 219, 202, 0.2);
-}
-
-.vote-showcase-box {
-    background-color: #12091c;
-    border: 2px solid #5a77c7;
-    border-radius: 12px;
-    padding: 30px;
-    width: 100%;
-    max-width: 450px;
-    text-align: center;
-    position: relative;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
-    min-height: 150px;
-}
-
-.vote-showcase-header {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 15px;
-}
-
-.badge-sub {
-    background-color: #392e5c;
-    color: #b785ff;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 0.9rem;
-    font-weight: bold;
-}
-
-.showcase-user {
-    color: #c9a3ff;
-    font-size: 1.5rem;
-    font-weight: bold;
-}
-
-.showcase-score {
-    color: white;
-    font-size: 4.5rem;
-    font-weight: bold;
-    margin: 20px 0;
-    text-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-}
-
-.votos-counter {
-    position: absolute;
-    bottom: 20px;
-    left: 20px;
-    background-color: #0060df;
-    color: white;
-    padding: 6px 14px;
-    border-radius: 20px;
-    font-weight: bold;
-    font-size: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
 /* FASE FINAL */
 .fase-final-section {
     width: 100%;
@@ -829,48 +744,9 @@ header h1 {
     margin-bottom: 40px;
 }
 
-.twitch-tooltip {
-    background-color: #772ce8;
-    border-radius: 10px;
-    padding: 15px 20px;
-    color: white;
-    text-align: center;
-    position: relative;
-    width: 120%;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
-}
-
-.twitch-tooltip p {
-    margin: 5px 0;
-    font-size: 0.95rem;
-}
-
-.twitch-tooltip strong {
-    color: #fbc02d;
-}
-
-.twitch-icon-circle {
-    position: absolute;
-    bottom: -20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #0b1a24;
-    border: 2px solid #772ce8;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.2rem;
-}
-
-/* =========================================
-   ESTILOS DEL MODAL DE GANADOR
-   ========================================= */
-
+/* === MODAL GANADOR FINAL === */
 .winner-bg {
-    background-color: rgba(11, 26, 38, 0.95) !important; /* Azul oscuro de la captura */
+    background-color: rgba(11, 26, 38, 0.95) !important;
 }
 
 .winner-content-box {
@@ -902,11 +778,11 @@ header h1 {
 }
 
 .winner-trophy {
-    color: #4dd0e1; /* Iconos color cyan */
+    color: #4dd0e1;
 }
 
 .winner-card {
-    background-color: #1a2733; /* Color de la tarjeta de la captura */
+    background-color: #1a2733;
     border-radius: 12px;
     display: flex;
     width: 100%;
