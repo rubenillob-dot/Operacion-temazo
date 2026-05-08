@@ -907,16 +907,28 @@
         </div>
     </div>
     <div id="twitchModal" class="modal-overlay">
-        <div class="modal-content twitch-modal">
-            <button class="close-modal" onclick="cerrarTwitch()"><i class="fa-solid fa-xmark"></i></button>
-            <h2 class="modal-title" style="color: #9146FF;"><i class="fa-brands fa-twitch"></i> Votación del Chat</h2>
+        <div class="modal-content" style="background: transparent; border: none; box-shadow: none; display: flex; flex-direction: column; align-items: center; gap: 20px;">
+            
+            <button class="close-modal" onclick="cerrarTwitch()" style="position: relative; top: 0; right: -200px;"><i class="fa-solid fa-xmark"></i></button>
 
-            <div class="timer-wrapper">
-                <div id="twitchTimer" class="timer-circle">30</div>
+            <div class="timer-circle-large">
+                <i class="fa-solid fa-clock" style="font-size: 1rem; margin-right: 5px; color: #8b9d96;"></i>
+                <span id="twitchTimer">30</span>
             </div>
 
-            <div id="twitchVotesList" class="votes-list">
+            <div class="vote-showcase-box">
+                <div class="vote-showcase-header">
+                    <span id="badgeSub" class="badge-sub" style="display: none;">Sub</span>
+                    <span id="showcaseUser" class="showcase-user">Esperando chat...</span>
+                </div>
+                
+                <div id="showcaseScore" class="showcase-score">-</div>
+                
+                <div class="votos-counter">
+                    <i class="fa-brands fa-twitch"></i> Votos: <span id="totalVotes">0</span>
+                </div>
             </div>
+
         </div>
     </div>
     <script src="script.js"></script>

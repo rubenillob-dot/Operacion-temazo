@@ -218,34 +218,39 @@ const client = new tmi.Client({
 // Conecta al chat de Twitch
 client.connect().catch(console.error);
 
-/**
- * Listener que lee todos los mensajes del chat en tiempo real.
- * Solo procesa números del 0 al 10 si la votación está activa.
- */
 client.on('message', (channel, tags, message, self) => {
     if (self || !isVotingActive) return;
 
-    // Comprueba si el mensaje es un número entre 0 y 10 (admite decimales como 8.5)
-    const voto = parseFloat(message.trim().replace(',', '.'));
+    // Busca un número (entero o decimal) en el mensaje del usuario
+    const match = message.match(/\b([0-9]|10)(?:[.,][0-9])?\b/);
     
-    if (!isNaN(voto) && voto >= 0 && voto <= 10) {
-        const username = tags['display-name'];
+    if (match) {
+        const voto = parseFloat(match[0].replace(',', '.'));
         
-        // Si el usuario no ha votado en esta ronda, registramos su voto
-        if (!currentVotes[username]) {
-            currentVotes[username] = voto;
-            mostrarVotoEnPantalla(username, voto);
+        // Verifica que la nota es válida (0 al 10)
+        if (voto >= 0 && voto <= 10) {
+            const username = tags['display-name'] || tags.username;
+            
+            // Verificamos si es suscriptor (Twitch envía esto en los tags)
+            const isSub = tags.subscriber || tags.mod || tags.badges?.founder;
+            
+            // Si no ha votado, lo registramos y actualizamos el pantallón
+            if (currentVotes[username] === undefined) {
+                currentVotes[username] = voto;
+                mostrarVotoEnPantalla(username, voto, isSub);
+            }
         }
     }
 });
 
-/**
- * Abre el modal de Twitch, reinicia variables y arranca la cuenta atrás de 30s.
- * @param {string} id - El identificador de la canción que se va a votar.
- */
 function abrirVotacionTwitch(id) {
     document.getElementById('twitchModal').style.display = 'flex';
-    document.getElementById('twitchVotesList').innerHTML = '';
+    
+    // Reseteamos el panel visual
+    document.getElementById('showcaseUser').innerText = 'Esperando chat...';
+    document.getElementById('showcaseScore').innerText = '-';
+    document.getElementById('totalVotes').innerText = '0';
+    document.getElementById('badgeSub').style.display = 'none';
     document.getElementById('twitchTimer').innerText = '30';
     
     currentVotingSongId = id;
@@ -264,30 +269,24 @@ function abrirVotacionTwitch(id) {
     }, 1000);
 }
 
-/**
- * Dibuja un nuevo voto en la lista del modal.
- * @param {string} username - Nombre del usuario de Twitch.
- * @param {number} voto - Nota del 0 al 10.
- */
-function mostrarVotoEnPantalla(username, voto) {
-    const list = document.getElementById('twitchVotesList');
-    const div = document.createElement('div');
-    div.className = 'vote-item';
-    div.innerHTML = `<span class="vote-user">${username}</span> <span class="vote-score">${voto}</span>`;
+function mostrarVotoEnPantalla(username, voto, isSub) {
+    // Actualiza el nombre y la nota gigante
+    document.getElementById('showcaseUser').innerText = username;
+    document.getElementById('showcaseScore').innerText = voto;
     
-    // Lo añade al principio de la lista
-    list.prepend(div);
+    // Muestra u oculta la etiqueta de "Sub"
+    document.getElementById('badgeSub').style.display = isSub ? 'inline-block' : 'none';
+    
+    // Actualiza el contador total
+    const total = Object.keys(currentVotes).length;
+    document.getElementById('totalVotes').innerText = total;
 }
 
-/**
- * Cierra la votación, calcula la media en secreto y avisa al usuario.
- */
 function finalizarVotacion() {
     clearInterval(votingTimer);
     isVotingActive = false;
-    document.getElementById('twitchTimer').innerText = 'FIN';
+    document.getElementById('twitchTimer').innerText = '0';
     
-    // Cálculo de la media
     const arrayVotos = Object.values(currentVotes);
     let media = 0;
     
@@ -296,29 +295,19 @@ function finalizarVotacion() {
         media = (suma / arrayVotos.length).toFixed(1);
     }
     
-    // Guardamos la media en el objeto secreto
     notasSecretasPublico[currentVotingSongId] = parseFloat(media);
     
-    // Pequeño aviso visual de que se ha guardado, sin mostrar el número
-    const list = document.getElementById('twitchVotesList');
-    const finalDiv = document.createElement('div');
-    finalDiv.style.textAlign = 'center';
-    finalDiv.style.color = '#1ed760';
-    finalDiv.style.marginTop = '15px';
-    finalDiv.innerHTML = `<strong>¡Votación cerrada! Media guardada en secreto.</strong>`;
-    list.prepend(finalDiv);
+    // Mensaje de cierre en el panel
+    document.getElementById('showcaseUser').innerText = 'Votación Cerrada';
+    document.getElementById('showcaseScore').innerText = '🔒';
+    document.getElementById('badgeSub').style.display = 'none';
     
-    // Cierra el modal automáticamente después de 3 segundos
     setTimeout(() => {
         cerrarTwitch();
-        // Opcionalmente, cambiar de color el botón de Twitch para saber que ya se votó
         document.querySelector(`#cancion${currentVotingSongId} .btn-twitch`).style.backgroundColor = '#1ed760';
     }, 3000);
 }
 
-/**
- * Cierra el modal de Twitch manualmente.
- */
 function cerrarTwitch() {
     document.getElementById('twitchModal').style.display = 'none';
     clearInterval(votingTimer);
