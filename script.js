@@ -216,6 +216,11 @@ let votingTimer = null;
  * IMPORTANTE: El canal debe estar estrictamente en minúsculas.
  */
 const client = new tmi.Client({
+    options: { debug: true }, // <--- Esto nos dará toda la info interna
+    connection: {
+        reconnect: true,
+        secure: true // <--- Obliga al navegador a no bloquear la conexión
+    },
     channels: ['imarixu']
 });
 
@@ -225,7 +230,9 @@ client.on('connected', (addr, port) => {
 });
 
 // Conexión inicial al chat
-client.connect().catch(console.error);
+client.connect().catch(error => {
+    console.error(`[ERROR CRÍTICO TWITCH] No se pudo conectar:`, error);
+});
 
 /**
  * Listener principal que procesa cada mensaje enviado al chat de Twitch.
