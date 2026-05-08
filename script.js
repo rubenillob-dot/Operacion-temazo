@@ -331,37 +331,49 @@ function cerrarGanador() {
     audioGanador.currentTime = 0;
 }
 
-// === LÓGICA DE TWITCH (OPCIONAL) ===
-try {
-    const client = new tmi.Client({
-        options: { debug: false },
-        connection: { reconnect: true, secure: true },
-        channels: ['imarixu']
-    });
+// =========================================================================
+// === LÓGICA DE TWITCH DEFINITIVA ===
+// =========================================================================
 
-    client.connect().catch(e => console.log("Error Twitch:", e));
+// Configuración del cliente (el canal SIEMPRE en minúsculas)
+const client = new tmi.Client({
+    options: { debug: false },
+    connection: { reconnect: true, secure: true },
+    channels: ['imarixu']
+});
 
-    client.on('message', (channel, tags, message, self) => {
-        if (self || !isVotingActive) return;
-        const match = message.match(/[0-9]+([.,][0-9]+)?/);
+// Conectamos a Twitch de forma segura
+client.connect()
+    .then(() => console.log("[TWITCH] Conectado exitosamente al canal de imarixu"))
+    .catch(e => console.error("[ERROR TWITCH] No se pudo conectar:", e));
+
+// Leer el chat en tiempo real
+client.on('message', (channel, tags, message, self) => {
+    // Si no le hemos dado al botón morado de Twitch (los 30 segundos), ignoramos el chat
+    if (self || !isVotingActive) return;
+
+    // Buscamos un número del 0 al 10 en el mensaje (acepta decimales como 8.5 o 8,5)
+    // Se asegura de no coger números que sean parte de otras cifras (ej: ignora un "11" o "100")
+    const match = message.match(/\b(10(\.0+)?|[0-9]([.,][0-9]+)?)\b/);
+    
+    if (match) {
+        const voto = parseFloat(match[0].replace(',', '.'));
         
-        if (match) {
-            const voto = parseFloat(match[0].replace(',', '.'));
-            if (voto >= 0 && voto <= 10) {
-                const username = tags['display-name'] || tags.username;
-                let isSub = false;
-                if (tags.subscriber || tags.mod || (tags.badges && tags.badges.founder)) isSub = true;
-                
-                if (currentVotes[username] === undefined) {
-                    currentVotes[username] = voto;
-                    mostrarVotoEnPantalla(username, voto, isSub);
-                }
+        // Filtro de seguridad para asegurar que la nota es entre 0 y 10
+        if (voto >= 0 && voto <= 10) {
+            const username = tags['display-name'] || tags.username;
+            
+            // Detectamos si es Subscriptor, Moderador o Fundador
+            let isSub = !!(tags.subscriber || tags.mod || (tags.badges && tags.badges.founder));
+            
+            // Solo permitimos 1 voto por persona en cada ronda
+            if (currentVotes[username] === undefined) {
+                currentVotes[username] = voto;
+                mostrarVotoEnPantalla(username, voto, isSub);
             }
         }
-    });
-} catch(e) {
-    console.log("TMI.js no cargado");
-}
+    }
+});
 
 function abrirVotacionTwitch(id) {
     document.getElementById('twitchModal').style.display = 'flex';
@@ -373,7 +385,7 @@ function abrirVotacionTwitch(id) {
     
     currentVotingSongId = id;
     currentVotes = {};
-    isVotingActive = true;
+    isVotingActive = true; // ACTIVA EL MODO "ESCUCHAR CHAT"
     
     let tiempoRestante = 30;
     if (votingTimer) clearInterval(votingTimer);
@@ -386,17 +398,21 @@ function abrirVotacionTwitch(id) {
 }
 
 function mostrarVotoEnPantalla(username, voto, isSub) {
+    // Actualizamos el centro del modal con el último usuario que ha votado
     document.getElementById('showcaseUser').innerText = username;
     document.getElementById('showcaseScore').innerText = voto;
     document.getElementById('badgeSub').style.display = isSub ? 'inline-block' : 'none';
+    
+    // Actualizamos el contador total de votos
     document.getElementById('totalVotes').innerText = Object.keys(currentVotes).length;
 }
 
 function finalizarVotacion() {
     clearInterval(votingTimer);
-    isVotingActive = false;
+    isVotingActive = false; // APAGA EL MODO "ESCUCHAR CHAT"
     document.getElementById('twitchTimer').innerText = '0';
     
+    // Calculamos la nota media de todos los votos recogidos
     const arrayVotos = Object.values(currentVotes);
     let media = 0;
     if (arrayVotos.length > 0) {
@@ -404,10 +420,14 @@ function finalizarVotacion() {
         media = (suma / arrayVotos.length).toFixed(1);
     }
     
+    // Guardamos la media en secreto para la fase final
     notasSecretasPublico[currentVotingSongId] = parseFloat(media);
+    
     document.getElementById('showcaseUser').innerText = 'Votación Cerrada';
     document.getElementById('showcaseScore').innerText = '🔒';
+    document.getElementById('badgeSub').style.display = 'none';
     
+    // Actualizamos visualmente el frontend para sumar la nota de Ari, Luismi y el Chat
     const card = document.getElementById('cancion' + currentVotingSongId);
     if(card) {
         const inputs = card.querySelectorAll('.score-input');
@@ -417,6 +437,7 @@ function finalizarVotacion() {
         card.querySelector('.final-score').innerText = finalCalculado;
     }
 
+    // Cerramos la ventana después de 3 segundos y ponemos el botón verde
     setTimeout(() => {
         cerrarTwitch();
         const botonTwitch = document.querySelector(`#cancion${currentVotingSongId} .btn-twitch`);
