@@ -1,12 +1,18 @@
 /**
- * Variable para recordar qué canción está sonando en este momento.
+ * @file script.js
+ * Archivo principal de lógica para Operación Temazo 1.
+ * Incluye el reproductor de audio, cálculo de notas y conexión a Twitch.
+ */
+
+/**
+ * Almacena el ID de la canción que está sonando actualmente.
  * @type {string|null}
  */
 let cancionSonandoId = null;
 
 /**
- * Oculta la cubierta (icono gigante) y muestra los detalles interactivos de la canción.
- * @param {string} id - El identificador numérico de la canción.
+ * Oculta la cubierta de la canción y muestra los controles interactivos.
+ * @param {string} id - Identificador de la canción.
  */
 function revelarCancion(id) {
     document.getElementById('hidden' + id).style.display = 'none';
@@ -14,16 +20,14 @@ function revelarCancion(id) {
 }
 
 /**
- * Función principal del reproductor. Reproduce, pausa y alterna entre las canciones,
- * gestionando los cambios visuales de las tarjetas.
- * @param {string} id - El identificador numérico de la canción a reproducir.
+ * Reproduce o pausa la canción seleccionada, deteniendo cualquier otra que estuviera sonando.
+ * @param {string} id - Identificador de la canción.
  */
 function reproducir(id) {
     const audioActual = document.getElementById('audio' + id);
     const iconoActual = document.getElementById('playIcon' + id);
     const cartaActual = document.getElementById('cancion' + id);
 
-    // 1. Si el usuario hace clic en la misma canción que ya está seleccionada
     if (cancionSonandoId === id) {
         if (audioActual.paused) {
             audioActual.play();
@@ -39,7 +43,6 @@ function reproducir(id) {
         return;
     }
 
-    // 2. Si hay otra canción sonando, la paramos primero
     if (cancionSonandoId !== null) {
         const audioPrevio = document.getElementById('audio' + cancionSonandoId);
         const iconoPrevio = document.getElementById('playIcon' + cancionSonandoId);
@@ -56,7 +59,6 @@ function reproducir(id) {
         }
     }
 
-    // 3. Reproducimos la NUEVA canción
     audioActual.play();
     cartaActual.classList.add('playing');
     iconoActual.classList.remove('fa-play');
@@ -66,17 +68,17 @@ function reproducir(id) {
 }
 
 /**
- * Activa o desactiva el estilo visual del Ticket Dorado (Pase de Oro).
- * @param {HTMLElement} boton - El elemento botón del DOM que ha sido pulsado.
+ * Alterna el estado visual del botón de Pase de Oro.
+ * @param {HTMLElement} boton - El elemento botón del DOM.
  */
 function togglePaseOro(boton) {
     boton.classList.toggle('active');
 }
 
 /**
- * Abre la ventana modal para mostrar la letra de la canción.
- * @param {string} titulo - El título de la canción.
- * @param {string} letraHTML - El contenido de la letra en formato HTML.
+ * Abre el modal para visualizar la letra de la canción.
+ * @param {string} titulo - Título de la canción.
+ * @param {string} letraHTML - Contenido de la letra en HTML.
  */
 function abrirLetra(titulo, letraHTML) {
     document.getElementById('modalTitle').innerText = titulo;
@@ -85,29 +87,21 @@ function abrirLetra(titulo, letraHTML) {
 }
 
 /**
- * Cierra la ventana modal de la letra de la canción.
+ * Cierra el modal de la letra de la canción.
  */
 function cerrarLetra() {
     document.getElementById('lyricsModal').style.display = 'none';
 }
 
-/**
- * Evento global para cerrar la ventana modal si el usuario hace clic fuera de la caja de contenido.
- * @param {Event} event - El evento de clic del ratón.
- */
+// Cierra modales al hacer clic fuera
 window.onclick = function (event) {
-    let modal = document.getElementById('lyricsModal');
-    if (event.target == modal) {
+    let modalLetra = document.getElementById('lyricsModal');
+    if (event.target == modalLetra) {
         cerrarLetra();
     }
 }
 
-/**
- * Inicializadores y Listeners que se ejecutan una vez que el DOM está completamente cargado.
- */
 document.addEventListener('DOMContentLoaded', () => {
-
-    // Control de Volumen General
     const volumeSlider = document.querySelector('.volume-slider');
     if (volumeSlider) {
         volumeSlider.addEventListener('input', function (e) {
@@ -118,7 +112,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Calculo automático de notas (50% Ari + 25% Luismi)
     document.addEventListener('input', function (e) {
         if (e.target.classList.contains('score-input')) {
             const card = e.target.closest('.card');
@@ -131,10 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // === NUEVO: Actualización de la barra de progreso y el tiempo ===
     document.querySelectorAll('audio').forEach(audio => {
-
-        // Listener que se dispara continuamente mientras el audio avanza
         audio.addEventListener('timeupdate', function () {
             const id = this.id.replace('audio', '');
             const card = document.getElementById('cancion' + id);
@@ -143,22 +133,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 const progressBar = card.querySelector('.timeline-progress');
                 const timeText = card.querySelector('.time-text');
 
-                // 1. Mover la barra verde
                 const progressPercent = (this.currentTime / this.duration) * 100;
                 progressBar.style.width = progressPercent + '%';
 
-                // 2. Formatear minutos y segundos
                 const currentMins = Math.floor(this.currentTime / 60);
                 const currentSecs = Math.floor(this.currentTime % 60).toString().padStart(2, '0');
                 const totalMins = Math.floor(this.duration / 60);
                 const totalSecs = Math.floor(this.duration % 60).toString().padStart(2, '0');
 
-                // 3. Actualizar el texto
                 timeText.innerText = `${currentMins}:${currentSecs} / ${totalMins}:${totalSecs}`;
             }
         });
 
-        // Listener que se dispara cuando la canción termina por completo
         audio.addEventListener('ended', function () {
             const id = this.id.replace('audio', '');
             const card = document.getElementById('cancion' + id);
@@ -166,7 +152,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const progressBar = card.querySelector('.timeline-progress');
             const timeText = card.querySelector('.time-text');
 
-            // Devolver la tarjeta a su estado original apagado
             card.classList.remove('playing');
             iconoActual.classList.remove('fa-pause');
             iconoActual.classList.add('fa-play');
@@ -179,7 +164,6 @@ document.addEventListener('DOMContentLoaded', () => {
             cancionSonandoId = null;
         });
 
-        // Listener para cargar el tiempo total correcto en cuanto los metadatos del audio estén listos
         audio.addEventListener('loadedmetadata', function () {
             const id = this.id.replace('audio', '');
             const card = document.getElementById('cancion' + id);
@@ -191,62 +175,105 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
-
 });
 
+/* ========================================================================= */
+/* === CONEXIÓN A TWITCH Y VOTACIONES ====================================== */
+/* ========================================================================= */
+
 /**
- * Almacena las notas finales del público (en secreto) hasta que empiece la Fase Final.
+ * Almacena las notas medias finales del público de forma secreta.
  * @type {Object.<string, number>}
  */
 let notasSecretasPublico = {};
 
 /**
- * Variables de control para el estado de la votación actual.
+ * Indica si el temporizador de votación está actualmente activo.
+ * @type {boolean}
  */
 let isVotingActive = false;
-let currentVotingSongId = null;
-let currentVotes = {}; // Para evitar que una misma persona vote dos veces
-let votingTimer;
 
 /**
- * Configuración del cliente de Twitch usando tmi.js
+ * Almacena el ID de la canción que se está votando en este momento.
+ * @type {string|null}
+ */
+let currentVotingSongId = null;
+
+/**
+ * Registro de votos de la ronda actual para evitar duplicados.
+ * @type {Object.<string, number>}
+ */
+let currentVotes = {};
+
+/**
+ * Referencia al intervalo del temporizador.
+ * @type {number|null}
+ */
+let votingTimer = null;
+
+/**
+ * Instancia del cliente tmi.js para conectar con el chat de Twitch.
+ * IMPORTANTE: El canal debe estar estrictamente en minúsculas.
  */
 const client = new tmi.Client({
-    channels: ['imarixu'] // <-- ¡CAMBIA ESTO POR TU CANAL!
+    channels: ['imarixu']
 });
 
-// Conecta al chat de Twitch
+// Evento que avisa por consola cuando se ha conectado correctamente al chat
+client.on('connected', (addr, port) => {
+    console.log(`[TWITCH] Conectado a la sala: ${addr}:${port}`);
+});
+
+// Conexión inicial al chat
 client.connect().catch(console.error);
 
+/**
+ * Listener principal que procesa cada mensaje enviado al chat de Twitch.
+ * Extrae números y registra el voto si la votación está activa.
+ */
 client.on('message', (channel, tags, message, self) => {
+    // Chivato en la consola para ver qué está leyendo realmente
+    console.log(`[TWITCH] Mensaje de ${tags.username}: ${message}`);
+
+    // Si el mensaje es nuestro o no estamos votando, lo ignoramos
     if (self || !isVotingActive) return;
 
-    // Busca un número (entero o decimal) en el mensaje del usuario
-    const match = message.match(/\b([0-9]|10)(?:[.,][0-9])?\b/);
+    // Buscamos cualquier número en el mensaje (ej: "8", "8.5", "10")
+    const match = message.match(/[0-9]+([.,][0-9]+)?/);
     
     if (match) {
         const voto = parseFloat(match[0].replace(',', '.'));
         
-        // Verifica que la nota es válida (0 al 10)
+        // Verificamos que la nota esté entre 0 y 10
         if (voto >= 0 && voto <= 10) {
             const username = tags['display-name'] || tags.username;
             
-            // Verificamos si es suscriptor (Twitch envía esto en los tags)
-            const isSub = tags.subscriber || tags.mod || tags.badges?.founder;
+            // Verificación segura de si es Sub, Mod o VIP
+            let isSub = false;
+            if (tags.subscriber || tags.mod) {
+                isSub = true;
+            } else if (tags.badges && tags.badges.founder) {
+                isSub = true;
+            }
             
-            // Si no ha votado, lo registramos y actualizamos el pantallón
+            // Si el usuario no ha votado aún en esta ronda
             if (currentVotes[username] === undefined) {
                 currentVotes[username] = voto;
+                console.log(`[VOTO ACEPTADO] ${username} ha votado un ${voto}`);
                 mostrarVotoEnPantalla(username, voto, isSub);
             }
         }
     }
 });
 
+/**
+ * Inicia el proceso de votación de Twitch y muestra el modal.
+ * @param {string} id - Identificador numérico de la canción.
+ */
 function abrirVotacionTwitch(id) {
-    document.getElementById('twitchModal').style.display = 'flex';
+    console.log(`[SISTEMA] Abriendo votación para la canción ${id}`);
     
-    // Reseteamos el panel visual
+    document.getElementById('twitchModal').style.display = 'flex';
     document.getElementById('showcaseUser').innerText = 'Esperando chat...';
     document.getElementById('showcaseScore').innerText = '-';
     document.getElementById('totalVotes').innerText = '0';
@@ -259,6 +286,8 @@ function abrirVotacionTwitch(id) {
     
     let tiempoRestante = 30;
     
+    if (votingTimer) clearInterval(votingTimer);
+    
     votingTimer = setInterval(() => {
         tiempoRestante--;
         document.getElementById('twitchTimer').innerText = tiempoRestante;
@@ -269,19 +298,24 @@ function abrirVotacionTwitch(id) {
     }, 1000);
 }
 
+/**
+ * Actualiza la interfaz gráfica con el último voto recibido.
+ * @param {string} username - Nombre del usuario que ha votado.
+ * @param {number} voto - Nota otorgada.
+ * @param {boolean} isSub - Indica si el usuario tiene estado de suscripción.
+ */
 function mostrarVotoEnPantalla(username, voto, isSub) {
-    // Actualiza el nombre y la nota gigante
     document.getElementById('showcaseUser').innerText = username;
     document.getElementById('showcaseScore').innerText = voto;
-    
-    // Muestra u oculta la etiqueta de "Sub"
     document.getElementById('badgeSub').style.display = isSub ? 'inline-block' : 'none';
     
-    // Actualiza el contador total
     const total = Object.keys(currentVotes).length;
     document.getElementById('totalVotes').innerText = total;
 }
 
+/**
+ * Finaliza el temporizador, calcula la media y la almacena en secreto.
+ */
 function finalizarVotacion() {
     clearInterval(votingTimer);
     isVotingActive = false;
@@ -295,19 +329,23 @@ function finalizarVotacion() {
         media = (suma / arrayVotos.length).toFixed(1);
     }
     
+    console.log(`[SISTEMA] Votación finalizada. Media: ${media} (guardada en secreto)`);
     notasSecretasPublico[currentVotingSongId] = parseFloat(media);
     
-    // Mensaje de cierre en el panel
     document.getElementById('showcaseUser').innerText = 'Votación Cerrada';
     document.getElementById('showcaseScore').innerText = '🔒';
     document.getElementById('badgeSub').style.display = 'none';
     
     setTimeout(() => {
         cerrarTwitch();
-        document.querySelector(`#cancion${currentVotingSongId} .btn-twitch`).style.backgroundColor = '#1ed760';
+        const botonTwitch = document.querySelector(`#cancion${currentVotingSongId} .btn-twitch`);
+        if(botonTwitch) botonTwitch.style.backgroundColor = '#1ed760';
     }, 3000);
 }
 
+/**
+ * Cierra manualmente la interfaz del modal de Twitch.
+ */
 function cerrarTwitch() {
     document.getElementById('twitchModal').style.display = 'none';
     clearInterval(votingTimer);
