@@ -1,20 +1,17 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Operación Temazo 1 - Rubén</title>
-
+    <title>Operación Temazo 1 - Panel Completo</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tmi.js/1.8.5/tmi.min.js"></script>
 </head>
 
 <body>
-
     <header>
         <h1>Operación Temazo 1</h1>
     </header>
@@ -49,7 +46,7 @@
                     <i class="fa-solid fa-microphone-lines icon-bullet"></i>
                     <span>Cada miembro del jurado tiene <strong>un pase de oro <i
                                 class="fa-solid fa-ticket"></i></strong>, que usará para pasar directamente una canción
-                        a la <strong>fase final</strong>, sin necesidad de puntuarla</span>
+                        a la <strong>fase final</strong></span>
                 </li>
                 <li>
                     <i class="fa-solid fa-microphone-lines icon-bullet"></i>
@@ -102,663 +99,7 @@
         </div>
     </div>
 
-    <!-- <div class="grid-canciones">
-        <div class="card" id="cancion1">
-            <div class="state-hidden" id="hidden1">
-                <i class="fa-solid fa-music music-icon-big"></i>
-                <button class="btn-reveal" onclick="revelarCancion('1')">
-                    <i class="fa-solid fa-eye"></i>
-                </button>
-            </div>
-
-            <div class="state-revealed" id="revealed1" style="display: none;">
-                <img src="https://via.placeholder.com/146" alt="Carátula" class="caratula">
-                <div class="card-content">
-                    <div class="card-header-top">
-                        <div class="author-row"><i class="fa-solid fa-user author-avatar"></i> Artista 1</div>
-                        <button class="btn-golden-ticket" onclick="togglePaseOro(this)" title="Dar Pase de Oro">
-                            <i class="fa-solid fa-ticket"></i>
-                        </button>
-                    </div>
-                    <div class="song-title">Canción 1</div>
-                    <div class="player-ui">
-                        <button class="play-btn" onclick="reproducir('1')"><i class="fa-solid fa-play"
-                                id="playIcon1"></i></button>
-                        <div class="timeline">
-                            <div class="timeline-progress" style="width: 0%;"></div>
-                        </div>
-                        <span class="time-text">0:00 / 3:00</span>
-                    </div>
-                    <div class="scoring-row">
-                        <button class="btn-yellow-small" onclick="abrirLetra('Canción 1', 'Letra de la canción 1...')"
-                            title="Ver letra">
-                            <i class="fa-solid fa-book"></i>
-                        </button>
-                        <div class="score-input-group">
-                            <input type="number" placeholder="Ari" class="score-input" min="0" max="10">
-                            <input type="number" placeholder="Luismi" class="score-input" min="0" max="10">
-                        </div>
-                        <button class="btn-twitch" title="Pedir nota al chat"><i
-                                class="fa-brands fa-twitch"></i></button>
-                        <div class="final-score">-</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="card" id="cancion2">
-            <div class="state-hidden" id="hidden2">
-                <i class="fa-solid fa-music music-icon-big"></i>
-                <button class="btn-reveal" onclick="revelarCancion('1')">
-                    <i class="fa-solid fa-eye"></i>
-                </button>
-            </div>
-
-            <div class="state-revealed" id="revealed2" style="display: none;">
-                <img src="https://via.placeholder.com/146" alt="Carátula" class="caratula">
-                <div class="card-content">
-                    <div class="card-header-top">
-                        <div class="author-row"><i class="fa-solid fa-user author-avatar"></i> Artista 1</div>
-                        <button class="btn-golden-ticket" onclick="togglePaseOro(this)" title="Dar Pase de Oro">
-                            <i class="fa-solid fa-ticket"></i>
-                        </button>
-                    </div>
-                    <div class="song-title">Canción 1</div>
-                    <div class="player-ui">
-                        <button class="play-btn" onclick="reproducir('2')"><i class="fa-solid fa-play"
-                                id="playIcon2"></i></button>
-                        <div class="timeline">
-                            <div class="timeline-progress" style="width: 0%;"></div>
-                        </div>
-                        <span class="time-text">0:00 / 3:00</span>
-                    </div>
-                    <div class="scoring-row">
-                        <button class="btn-yellow-small" onclick="abrirLetra('Canción 2', 'Letra de la canción 2...')"
-                            title="Ver letra">
-                            <i class="fa-solid fa-book"></i>
-                        </button>
-                        <div class="score-input-group">
-                            <input type="number" placeholder="Ari" class="score-input" min="0" max="10">
-                            <input type="number" placeholder="Luismi" class="score-input" min="0" max="10">
-                        </div>
-                        <button class="btn-twitch" title="Pedir nota al chat"><i
-                                class="fa-brands fa-twitch"></i></button>
-                        <div class="final-score">-</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="card" id="cancion3">
-            <div class="state-hidden" id="hidden3">
-                <i class="fa-solid fa-music music-icon-big"></i>
-                <button class="btn-reveal" onclick="revelarCancion('1')">
-                    <i class="fa-solid fa-eye"></i>
-                </button>
-            </div>
-
-            <div class="state-revealed" id="revealed3" style="display: none;">
-                <img src="https://via.placeholder.com/146" alt="Carátula" class="caratula">
-                <div class="card-content">
-                    <div class="card-header-top">
-                        <div class="author-row"><i class="fa-solid fa-user author-avatar"></i> Artista 1</div>
-                        <button class="btn-golden-ticket" onclick="togglePaseOro(this)" title="Dar Pase de Oro">
-                            <i class="fa-solid fa-ticket"></i>
-                        </button>
-                    </div>
-                    <div class="song-title">Canción 3</div>
-                    <div class="player-ui">
-                        <button class="play-btn" onclick="reproducir('3')"><i class="fa-solid fa-play"
-                                id="playIcon3"></i></button>
-                        <div class="timeline">
-                            <div class="timeline-progress" style="width: 0%;"></div>
-                        </div>
-                        <span class="time-text">0:00 / 3:00</span>
-                    </div>
-                    <div class="scoring-row">
-                        <button class="btn-yellow-small" onclick="abrirLetra('Canción 1', 'Letra de la canción 1...')"
-                            title="Ver letra">
-                            <i class="fa-solid fa-book"></i>
-                        </button>
-                        <div class="score-input-group">
-                            <input type="number" placeholder="Ari" class="score-input" min="0" max="10">
-                            <input type="number" placeholder="Luismi" class="score-input" min="0" max="10">
-                        </div>
-                        <button class="btn-twitch" title="Pedir nota al chat"><i
-                                class="fa-brands fa-twitch"></i></button>
-                        <div class="final-score">-</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="card" id="cancion4">
-            <div class="state-hidden" id="hidden4">
-                <i class="fa-solid fa-music music-icon-big"></i>
-                <button class="btn-reveal" onclick="revelarCancion('1')">
-                    <i class="fa-solid fa-eye"></i>
-                </button>
-            </div>
-
-            <div class="state-revealed" id="revealed4" style="display: none;">
-                <img src="https://via.placeholder.com/146" alt="Carátula" class="caratula">
-                <div class="card-content">
-                    <div class="card-header-top">
-                        <div class="author-row"><i class="fa-solid fa-user author-avatar"></i> Artista 1</div>
-                        <button class="btn-golden-ticket" onclick="togglePaseOro(this)" title="Dar Pase de Oro">
-                            <i class="fa-solid fa-ticket"></i>
-                        </button>
-                    </div>
-                    <div class="song-title">Canción 1</div>
-                    <div class="player-ui">
-                        <button class="play-btn" onclick="reproducir('1')"><i class="fa-solid fa-play"
-                                id="playIcon1"></i></button>
-                        <div class="timeline">
-                            <div class="timeline-progress" style="width: 0%;"></div>
-                        </div>
-                        <span class="time-text">0:00 / 3:00</span>
-                    </div>
-                    <div class="scoring-row">
-                        <button class="btn-yellow-small" onclick="abrirLetra('Canción 1', 'Letra de la canción 1...')"
-                            title="Ver letra">
-                            <i class="fa-solid fa-book"></i>
-                        </button>
-                        <div class="score-input-group">
-                            <input type="number" placeholder="Ari" class="score-input" min="0" max="10">
-                            <input type="number" placeholder="Luismi" class="score-input" min="0" max="10">
-                        </div>
-                        <button class="btn-twitch" title="Pedir nota al chat"><i
-                                class="fa-brands fa-twitch"></i></button>
-                        <div class="final-score">-</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="card" id="cancion5">
-            <div class="state-hidden" id="hidden5">
-                <i class="fa-solid fa-music music-icon-big"></i>
-                <button class="btn-reveal" onclick="revelarCancion('1')">
-                    <i class="fa-solid fa-eye"></i>
-                </button>
-            </div>
-
-            <div class="state-revealed" id="revealed5" style="display: none;">
-                <img src="https://via.placeholder.com/146" alt="Carátula" class="caratula">
-                <div class="card-content">
-                    <div class="card-header-top">
-                        <div class="author-row"><i class="fa-solid fa-user author-avatar"></i> Artista 1</div>
-                        <button class="btn-golden-ticket" onclick="togglePaseOro(this)" title="Dar Pase de Oro">
-                            <i class="fa-solid fa-ticket"></i>
-                        </button>
-                    </div>
-                    <div class="song-title">Canción 1</div>
-                    <div class="player-ui">
-                        <button class="play-btn" onclick="reproducir('1')"><i class="fa-solid fa-play"
-                                id="playIcon1"></i></button>
-                        <div class="timeline">
-                            <div class="timeline-progress" style="width: 0%;"></div>
-                        </div>
-                        <span class="time-text">0:00 / 3:00</span>
-                    </div>
-                    <div class="scoring-row">
-                        <button class="btn-yellow-small" onclick="abrirLetra('Canción 1', 'Letra de la canción 1...')"
-                            title="Ver letra">
-                            <i class="fa-solid fa-book"></i>
-                        </button>
-                        <div class="score-input-group">
-                            <input type="number" placeholder="Ari" class="score-input" min="0" max="10">
-                            <input type="number" placeholder="Luismi" class="score-input" min="0" max="10">
-                        </div>
-                        <button class="btn-twitch" title="Pedir nota al chat"><i
-                                class="fa-brands fa-twitch"></i></button>
-                        <div class="final-score">-</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="card" id="cancion6">
-            <div class="state-hidden" id="hidden6">
-                <i class="fa-solid fa-music music-icon-big"></i>
-                <button class="btn-reveal" onclick="revelarCancion('1')">
-                    <i class="fa-solid fa-eye"></i>
-                </button>
-            </div>
-
-            <div class="state-revealed" id="revealed6" style="display: none;">
-                <img src="https://via.placeholder.com/146" alt="Carátula" class="caratula">
-                <div class="card-content">
-                    <div class="card-header-top">
-                        <div class="author-row"><i class="fa-solid fa-user author-avatar"></i> Artista 1</div>
-                        <button class="btn-golden-ticket" onclick="togglePaseOro(this)" title="Dar Pase de Oro">
-                            <i class="fa-solid fa-ticket"></i>
-                        </button>
-                    </div>
-                    <div class="song-title">Canción 1</div>
-                    <div class="player-ui">
-                        <button class="play-btn" onclick="reproducir('1')"><i class="fa-solid fa-play"
-                                id="playIcon1"></i></button>
-                        <div class="timeline">
-                            <div class="timeline-progress" style="width: 0%;"></div>
-                        </div>
-                        <span class="time-text">0:00 / 3:00</span>
-                    </div>
-                    <div class="scoring-row">
-                        <button class="btn-yellow-small" onclick="abrirLetra('Canción 1', 'Letra de la canción 1...')"
-                            title="Ver letra">
-                            <i class="fa-solid fa-book"></i>
-                        </button>
-                        <div class="score-input-group">
-                            <input type="number" placeholder="Ari" class="score-input" min="0" max="10">
-                            <input type="number" placeholder="Luismi" class="score-input" min="0" max="10">
-                        </div>
-                        <button class="btn-twitch" title="Pedir nota al chat"><i
-                                class="fa-brands fa-twitch"></i></button>
-                        <div class="final-score">-</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="card" id="cancion7">
-            <div class="state-hidden" id="hidden7">
-                <i class="fa-solid fa-music music-icon-big"></i>
-                <button class="btn-reveal" onclick="revelarCancion('7')">
-                    <i class="fa-solid fa-eye"></i>
-                </button>
-            </div>
-
-            <div class="state-revealed" id="revealed7" style="display: none;">
-                <img src="https://via.placeholder.com/146" alt="Carátula" class="caratula">
-                <div class="card-content">
-                    <div class="card-header-top">
-                        <div class="author-row"><i class="fa-solid fa-user author-avatar"></i> Artista 1</div>
-                        <button class="btn-golden-ticket" onclick="togglePaseOro(this)" title="Dar Pase de Oro">
-                            <i class="fa-solid fa-ticket"></i>
-                        </button>
-                    </div>
-                    <div class="song-title">Canción 1</div>
-                    <div class="player-ui">
-                        <button class="play-btn" onclick="reproducir('1')"><i class="fa-solid fa-play"
-                                id="playIcon1"></i></button>
-                        <div class="timeline">
-                            <div class="timeline-progress" style="width: 0%;"></div>
-                        </div>
-                        <span class="time-text">0:00 / 3:00</span>
-                    </div>
-                    <div class="scoring-row">
-                        <button class="btn-yellow-small" onclick="abrirLetra('Canción 1', 'Letra de la canción 1...')"
-                            title="Ver letra">
-                            <i class="fa-solid fa-book"></i>
-                        </button>
-                        <div class="score-input-group">
-                            <input type="number" placeholder="Ari" class="score-input" min="0" max="10">
-                            <input type="number" placeholder="Luismi" class="score-input" min="0" max="10">
-                        </div>
-                        <button class="btn-twitch" title="Pedir nota al chat"><i
-                                class="fa-brands fa-twitch"></i></button>
-                        <div class="final-score">-</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="card" id="cancion8">
-            <div class="state-hidden" id="hidden8">
-                <i class="fa-solid fa-music music-icon-big"></i>
-                <button class="btn-reveal" onclick="revelarCancion('8')">
-                    <i class="fa-solid fa-eye"></i>
-                </button>
-            </div>
-
-            <div class="state-revealed" id="revealed8" style="display: none;">
-                <img src="https://via.placeholder.com/146" alt="Carátula" class="caratula">
-                <div class="card-content">
-                    <div class="card-header-top">
-                        <div class="author-row"><i class="fa-solid fa-user author-avatar"></i> Artista 1</div>
-                        <button class="btn-golden-ticket" onclick="togglePaseOro(this)" title="Dar Pase de Oro">
-                            <i class="fa-solid fa-ticket"></i>
-                        </button>
-                    </div>
-                    <div class="song-title">Canción 1</div>
-                    <div class="player-ui">
-                        <button class="play-btn" onclick="reproducir('1')"><i class="fa-solid fa-play"
-                                id="playIcon1"></i></button>
-                        <div class="timeline">
-                            <div class="timeline-progress" style="width: 0%;"></div>
-                        </div>
-                        <span class="time-text">0:00 / 3:00</span>
-                    </div>
-                    <div class="scoring-row">
-                        <button class="btn-yellow-small" onclick="abrirLetra('Canción 1', 'Letra de la canción 1...')"
-                            title="Ver letra">
-                            <i class="fa-solid fa-book"></i>
-                        </button>
-                        <div class="score-input-group">
-                            <input type="number" placeholder="Ari" class="score-input" min="0" max="10">
-                            <input type="number" placeholder="Luismi" class="score-input" min="0" max="10">
-                        </div>
-                        <button class="btn-twitch" title="Pedir nota al chat"><i
-                                class="fa-brands fa-twitch"></i></button>
-                        <div class="final-score">-</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="card" id="cancion9">
-            <div class="state-hidden" id="hidden9">
-                <i class="fa-solid fa-music music-icon-big"></i>
-                <button class="btn-reveal" onclick="revelarCancion('9')">
-                    <i class="fa-solid fa-eye"></i>
-                </button>
-            </div>
-
-            <div class="state-revealed" id="revealed9" style="display: none;">
-                <img src="https://via.placeholder.com/146" alt="Carátula" class="caratula">
-                <div class="card-content">
-                    <div class="card-header-top">
-                        <div class="author-row"><i class="fa-solid fa-user author-avatar"></i> Artista 1</div>
-                        <button class="btn-golden-ticket" onclick="togglePaseOro(this)" title="Dar Pase de Oro">
-                            <i class="fa-solid fa-ticket"></i>
-                        </button>
-                    </div>
-                    <div class="song-title">Canción 1</div>
-                    <div class="player-ui">
-                        <button class="play-btn" onclick="reproducir('1')"><i class="fa-solid fa-play"
-                                id="playIcon1"></i></button>
-                        <div class="timeline">
-                            <div class="timeline-progress" style="width: 0%;"></div>
-                        </div>
-                        <span class="time-text">0:00 / 3:00</span>
-                    </div>
-                    <div class="scoring-row">
-                        <button class="btn-yellow-small" onclick="abrirLetra('Canción 1', 'Letra de la canción 1...')"
-                            title="Ver letra">
-                            <i class="fa-solid fa-book"></i>
-                        </button>
-                        <div class="score-input-group">
-                            <input type="number" placeholder="Ari" class="score-input" min="0" max="10">
-                            <input type="number" placeholder="Luismi" class="score-input" min="0" max="10">
-                        </div>
-                        <button class="btn-twitch" title="Pedir nota al chat"><i
-                                class="fa-brands fa-twitch"></i></button>
-                        <div class="final-score">-</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="card" id="cancion10">
-            <div class="state-hidden" id="hidden10">
-                <i class="fa-solid fa-music music-icon-big"></i>
-                <button class="btn-reveal" onclick="revelarCancion('10')">
-                    <i class="fa-solid fa-eye"></i>
-                </button>
-            </div>
-
-            <div class="state-revealed" id="revealed10" style="display: none;">
-                <img src="https://via.placeholder.com/146" alt="Carátula" class="caratula">
-                <div class="card-content">
-                    <div class="card-header-top">
-                        <div class="author-row"><i class="fa-solid fa-user author-avatar"></i> Artista 1</div>
-                        <button class="btn-golden-ticket" onclick="togglePaseOro(this)" title="Dar Pase de Oro">
-                            <i class="fa-solid fa-ticket"></i>
-                        </button>
-                    </div>
-                    <div class="song-title">Canción 1</div>
-                    <div class="player-ui">
-                        <button class="play-btn" onclick="reproducir('1')"><i class="fa-solid fa-play"
-                                id="playIcon1"></i></button>
-                        <div class="timeline">
-                            <div class="timeline-progress" style="width: 0%;"></div>
-                        </div>
-                        <span class="time-text">0:00 / 3:00</span>
-                    </div>
-                    <div class="scoring-row">
-                        <button class="btn-yellow-small" onclick="abrirLetra('Canción 1', 'Letra de la canción 1...')"
-                            title="Ver letra">
-                            <i class="fa-solid fa-book"></i>
-                        </button>
-                        <div class="score-input-group">
-                            <input type="number" placeholder="Ari" class="score-input" min="0" max="10">
-                            <input type="number" placeholder="Luismi" class="score-input" min="0" max="10">
-                        </div>
-                        <button class="btn-twitch" title="Pedir nota al chat"><i
-                                class="fa-brands fa-twitch"></i></button>
-                        <div class="final-score">-</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="card" id="cancion11">
-            <div class="state-hidden" id="hidden11">
-                <i class="fa-solid fa-music music-icon-big"></i>
-                <button class="btn-reveal" onclick="revelarCancion('11')">
-                    <i class="fa-solid fa-eye"></i>
-                </button>
-            </div>
-
-            <div class="state-revealed" id="revealed11" style="display: none;">
-                <img src="https://via.placeholder.com/146" alt="Carátula" class="caratula">
-                <div class="card-content">
-                    <div class="card-header-top">
-                        <div class="author-row"><i class="fa-solid fa-user author-avatar"></i> Artista 1</div>
-                        <button class="btn-golden-ticket" onclick="togglePaseOro(this)" title="Dar Pase de Oro">
-                            <i class="fa-solid fa-ticket"></i>
-                        </button>
-                    </div>
-                    <div class="song-title">Canción 1</div>
-                    <div class="player-ui">
-                        <button class="play-btn" onclick="reproducir('1')"><i class="fa-solid fa-play"
-                                id="playIcon1"></i></button>
-                        <div class="timeline">
-                            <div class="timeline-progress" style="width: 0%;"></div>
-                        </div>
-                        <span class="time-text">0:00 / 3:00</span>
-                    </div>
-                    <div class="scoring-row">
-                        <button class="btn-yellow-small" onclick="abrirLetra('Canción 1', 'Letra de la canción 1...')"
-                            title="Ver letra">
-                            <i class="fa-solid fa-book"></i>
-                        </button>
-                        <div class="score-input-group">
-                            <input type="number" placeholder="Ari" class="score-input" min="0" max="10">
-                            <input type="number" placeholder="Luismi" class="score-input" min="0" max="10">
-                        </div>
-                        <button class="btn-twitch" title="Pedir nota al chat"><i
-                                class="fa-brands fa-twitch"></i></button>
-                        <div class="final-score">-</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="card" id="cancion12">
-            <div class="state-hidden" id="hidden12">
-                <i class="fa-solid fa-music music-icon-big"></i>
-                <button class="btn-reveal" onclick="revelarCancion('12')">
-                    <i class="fa-solid fa-eye"></i>
-                </button>
-            </div>
-
-            <div class="state-revealed" id="revealed12" style="display: none;">
-                <img src="https://i.scdn.co/image/ab67616d0000b273b46f74097655d7f353caab14" alt="Carátula"
-                    class="caratula">
-                <div class="card-content">
-
-                    <div class="card-header-top">
-                        <div class="author-row">
-                            <i class="fa-solid fa-user author-avatar"></i> Ari
-                        </div>
-                        <button class="btn-golden-ticket" onclick="togglePaseOro(this)" title="Dar Pase de Oro">
-                            <i class="fa-solid fa-ticket"></i>
-                        </button>
-                    </div>
-
-                    <div class="song-title">Codigo Arixu</div>
-
-                    <div class="player-ui">
-                        <button class="play-btn" onclick="reproducir('1')"><i class="fa-solid fa-play"
-                                id="playIcon1"></i></button>
-                        <div class="timeline">
-                            <div class="timeline-progress" style="width: 80%;"></div>
-                        </div>
-                        <span class="time-text">1:33 / 1:45</span>
-                        <i class="fa-solid fa-volume-high" style="color: var(--text-muted); font-size: 0.8rem;"></i>
-                    </div>
-
-                    <div class="scoring-row">
-                        <button class="btn-yellow-small"
-                            onclick="abrirLetra('Codigo Arixu', 'Letra de prueba de Codigo Arixu...<br>Línea 2<br>Línea 3<br>¡Temazo!')"
-                            title="Ver letra">
-                            <i class="fa-solid fa-book"></i>
-                        </button>
-
-                        <div class="score-input-group">
-                            <input type="number" placeholder="Ari" class="score-input" min="0" max="10">
-                            <input type="number" placeholder="Luismi" class="score-input" min="0" max="10">
-                        </div>
-                        <button class="btn-twitch" title="Pedir nota al chat"><i
-                                class="fa-brands fa-twitch"></i></button>
-                        <div class="final-score">-</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="card" id="cancion13">
-            <div class="state-hidden" id="hidden13">
-                <i class="fa-solid fa-music music-icon-big"></i>
-                <button class="btn-reveal" onclick="revelarCancion('13')"><i class="fa-solid fa-eye"></i></button>
-            </div>
-            <div class="state-revealed" id="revealed13" style="display: none;">
-                <img src="https://i.scdn.co/image/ab67616d0000b2737359994525d219f64872d3b1" alt="Carátula"
-                    class="caratula">
-                <div class="card-content">
-
-                    <div class="card-header-top">
-                        <div class="author-row"><i class="fa-solid fa-user author-avatar"></i> Ruben_Fan</div>
-                        <button class="btn-golden-ticket" onclick="togglePaseOro(this)" title="Dar Pase de Oro">
-                            <i class="fa-solid fa-ticket"></i>
-                        </button>
-                    </div>
-
-                    <div class="song-title">El Retumbar</div>
-
-                    <div class="player-ui">
-                        <button class="play-btn" onclick="reproducir('2')"><i class="fa-solid fa-play"
-                                id="playIcon2"></i></button>
-                        <div class="timeline">
-                            <div class="timeline-progress" style="width: 0%;"></div>
-                        </div>
-                        <span class="time-text">0:00 / 2:10</span>
-                        <i class="fa-solid fa-volume-high" style="color: var(--text-muted); font-size: 0.8rem;"></i>
-                    </div>
-
-                    <div class="scoring-row">
-                        <button class="btn-yellow-small"
-                            onclick="abrirLetra('El Retumbar', 'Un rumor popular<br>Algo imposible de explicar<br>A todos va a pasar...')"
-                            title="Ver letra">
-                            <i class="fa-solid fa-book"></i>
-                        </button>
-
-                        <div class="score-input-group">
-                            <input type="number" placeholder="Ari" class="score-input">
-                            <input type="number" placeholder="Luismi" class="score-input">
-                        </div>
-                        <button class="btn-twitch"><i class="fa-brands fa-twitch"></i></button>
-                        <div class="final-score">-</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="card" id="cancion14">
-            <div class="state-hidden" id="hidden14">
-                <i class="fa-solid fa-music music-icon-big"></i>
-                <button class="btn-reveal" onclick="revelarCancion('14')"><i class="fa-solid fa-eye"></i></button>
-            </div>
-
-            <div class="state-revealed" id="revealed14" style="display: none;">
-                <img src="https://via.placeholder.com/146" alt="Carátula" class="caratula">
-                <div class="card-content">
-
-                    <div class="card-header-top">
-                        <div class="author-row"><i class="fa-solid fa-user author-avatar"></i> Xenomorfo</div>
-                        <button class="btn-golden-ticket" onclick="togglePaseOro(this)" title="Dar Pase de Oro">
-                            <i class="fa-solid fa-ticket"></i>
-                        </button>
-                    </div>
-
-                    <div class="song-title">Españolete</div>
-
-                    <div class="player-ui">
-                        <button class="play-btn" onclick="reproducir('3')"><i class="fa-solid fa-play"
-                                id="playIcon3"></i></button>
-                        <div class="timeline">
-                            <div class="timeline-progress" style="width: 0%;"></div>
-                        </div>
-                        <span class="time-text">0:00 / 4:30</span>
-                        <i class="fa-solid fa-volume-high" style="color: var(--text-muted); font-size: 0.8rem;"></i>
-                    </div>
-
-                    <div class="scoring-row">
-                        <button class="btn-yellow-small"
-                            onclick="abrirLetra('Españolete', 'Letra inventada para Españolete...<br>Porque este es un temazo<br>¡Pase de oro ya!')"
-                            title="Ver letra">
-                            <i class="fa-solid fa-book"></i>
-                        </button>
-
-                        <div class="score-input-group">
-                            <input type="number" placeholder="Ari" class="score-input" min="0" max="10">
-                            <input type="number" placeholder="Luismi" class="score-input" min="0" max="10">
-                        </div>
-                        <button class="btn-twitch" title="Pedir nota al chat"><i
-                                class="fa-brands fa-twitch"></i></button>
-                        <div class="final-score">-</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="card" id="cancion15">
-            <div class="state-hidden" id="hidden15">
-                <i class="fa-solid fa-music music-icon-big"></i>
-                <button class="btn-reveal" onclick="revelarCancion('15')">
-                    <i class="fa-solid fa-eye"></i>
-                </button>
-            </div>
-
-            <div class="state-revealed" id="revealed15" style="display: none;">
-                <img src="https://via.placeholder.com/146" alt="Carátula" class="caratula">
-                <div class="card-content">
-                    <div class="card-header-top">
-                        <div class="author-row"><i class="fa-solid fa-user author-avatar"></i> Artista 1</div>
-                        <button class="btn-golden-ticket" onclick="togglePaseOro(this)" title="Dar Pase de Oro">
-                            <i class="fa-solid fa-ticket"></i>
-                        </button>
-                    </div>
-                    <div class="song-title">Canción 1</div>
-                    <div class="player-ui">
-                        <button class="play-btn" onclick="reproducir('1')"><i class="fa-solid fa-play"
-                                id="playIcon1"></i></button>
-                        <div class="timeline">
-                            <div class="timeline-progress" style="width: 0%;"></div>
-                        </div>
-                        <span class="time-text">0:00 / 3:00</span>
-                    </div>
-                    <div class="scoring-row">
-                        <button class="btn-yellow-small" onclick="abrirLetra('Canción 1', 'Letra de la canción 1...')"
-                            title="Ver letra">
-                            <i class="fa-solid fa-book"></i>
-                        </button>
-                        <div class="score-input-group">
-                            <input type="number" placeholder="Ari" class="score-input" min="0" max="10">
-                            <input type="number" placeholder="Luismi" class="score-input" min="0" max="10">
-                        </div>
-                        <button class="btn-twitch" title="Pedir nota al chat"><i
-                                class="fa-brands fa-twitch"></i></button>
-                        <div class="final-score">-</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
-
     <div class="grid-canciones">
-
         <div class="card" id="cancion1">
             <div class="state-hidden" id="hidden1">
                 <i class="fa-solid fa-music music-icon-big"></i>
@@ -768,22 +109,24 @@
             </div>
 
             <div class="state-revealed" id="revealed1" style="display: none;">
-                <img src="https://i.scdn.co/image/ab67616d0000b273b46f74097655d7f353caab14" alt="Carátula"
-                    class="caratula">
+                <img src="imagen/cancion1.png" alt="Carátula" class="caratula">
                 <div class="card-content">
 
                     <div class="card-header-top">
                         <div class="author-row">
-                            <i class="fa-solid fa-user author-avatar"></i> Ari
+                            <i class="fa-solid fa-user author-avatar"></i> Artista 1
                         </div>
                         <button class="btn-golden-ticket" onclick="togglePaseOro(this)" title="Dar Pase de Oro">
                             <i class="fa-solid fa-ticket"></i>
                         </button>
                     </div>
 
-                    <div class="song-title">Codigo Arixu</div>
+                    <div class="song-title">Canción 1</div>
 
                     <div class="player-ui">
+                        <!-- AUDIO OCULTO -->
+                        <audio id="audio1" src="musica/cancion1.mp3"></audio>
+
                         <button class="play-btn" onclick="reproducir('1')"><i class="fa-solid fa-play"
                                 id="playIcon1"></i></button>
                         <div class="timeline">
@@ -794,7 +137,7 @@
 
                     <div class="scoring-row">
                         <button class="btn-yellow-small"
-                            onclick="abrirLetra('Codigo Arixu', 'Letra de Codigo Arixu...<br>Continuará...')"
+                            onclick="abrirLetra('El titulo el que sea', '¡Erick, dale al play ya, cojones!<br>Manda unos beats de los tuyos, ¡que aquí empieza el jaleo!<br>¡Vámonos!<br><br>(Verso 1 - Rumba callejera)<br>El Xenomorfo ya empezó con sus cinco putos euros,<br>dice que es más rico que el Elon Musk, ¡vaya huevos!<br>El chat se revolucionó y están tos con la locura,<br>midiéndose la tula... ¡vaya panda de caraduras!<br><br>(Pre-estribillo - Con guasa)<br>Empiezan las partidas y van a por Ari a saco,<br>el arma se le bugea, ¡vaya juego más de Paco!<br>¡Vaya puto Bugnite de mis penas, joder!<br>¡Que no hay manera de ganar ni una, ya lo vas a ver!<br><br>(Estribillo - Con quejío y potencia)<br>¡AYYYYYYYYY!<br>¡Ahora le debo puntos hasta al de la tienda de chuches!<br>No gano ni una predi, ¡que me maten, que me escuches!<br>Mi suerte es de culebra y me he quedao en la quiebra,<br>¡y hasta el Xeno sale en la canción, vaya pedazo de liebre!<br><br>(Verso 2 - Tiempo de bulería, más &quot;sentío&quot;)<br>¿Y qué decir de los mods? ¡Vaya cuadrilla de tontos!<br>Nos tienen encerraos en el sótano, ¡esto es un aborto!<br>Sin luz y sin gasoil, ¡vaya panorama más tonto!<br>La pobre Neus ya no come, el Noopo ya no bebe,<br>y el pobre Rubén ya no ve ni tres en un burro... ¡aunque nieve!<br>¡Ay, pobres de ellos, que están tos desheredados!<br>¡Que los tienen ahí abajo a pan y agua, los tíos colgados!<br><br>(Puente - Subidón de fiesta)<br>¡Pero cucha! ¡Que por fin gana una la tía!<br>¡Milagro en el stream, qué alegría, qué alegría!<br>Ganamos una en todo el puto día, ¡ya era hora!<br>Que la teníamos a la pobre ahí toa sufridora.<br><br>(Outro - Jaleo puro)<br>Y no te olvides, niño, que aquí manda la jefa...<br>¡Oooooooooleeeeeeeeee! ¡Ese código Arixu que quita las penas!<br>¡Oooooooooleeeeeeeeee! ¡Mete el código Arixu, no seas rácano!<br>¡Dale ahí un golpe a la guitarra, que esto se acaba!<br>(¡Toma! ¡Zas! ¡Olé!)')"
                             title="Ver letra">
                             <i class="fa-solid fa-book"></i>
                         </button>
@@ -803,7 +146,7 @@
                             <input type="number" placeholder="Ari" class="score-input" min="0" max="10">
                             <input type="number" placeholder="Luismi" class="score-input" min="0" max="10">
                         </div>
-                        <button class="btn-twitch" title="Pedir nota al chat"><i
+                        <button class="btn-twitch" title="Pedir nota al chat" onclick="abrirVotacionTwitch('1')"><i
                                 class="fa-brands fa-twitch"></i></button>
                         <div class="final-score">-</div>
                     </div>
@@ -819,22 +162,24 @@
             </div>
 
             <div class="state-revealed" id="revealed2" style="display: none;">
-                <img src="https://i.scdn.co/image/ab67616d0000b2737359994525d219f64872d3b1" alt="Carátula"
-                    class="caratula">
+                <img src="https://via.placeholder.com/146/1ed760/ffffff?text=C2" alt="Carátula" class="caratula">
                 <div class="card-content">
 
                     <div class="card-header-top">
                         <div class="author-row">
-                            <i class="fa-solid fa-user author-avatar"></i> Ruben_Fan
+                            <i class="fa-solid fa-user author-avatar"></i> Artista 2
                         </div>
                         <button class="btn-golden-ticket" onclick="togglePaseOro(this)" title="Dar Pase de Oro">
                             <i class="fa-solid fa-ticket"></i>
                         </button>
                     </div>
 
-                    <div class="song-title">El Retumbar</div>
+                    <div class="song-title">Canción 2</div>
 
                     <div class="player-ui">
+                        <!-- AUDIO OCULTO -->
+                        <audio id="audio2" src="musica/cancion2.mp3"></audio>
+
                         <button class="play-btn" onclick="reproducir('2')"><i class="fa-solid fa-play"
                                 id="playIcon2"></i></button>
                         <div class="timeline">
@@ -845,7 +190,7 @@
 
                     <div class="scoring-row">
                         <button class="btn-yellow-small"
-                            onclick="abrirLetra('El Retumbar', 'Letra de El Retumbar...<br>Continuará...')"
+                            onclick="abrirLetra('Canción 2', 'Letra de la Canción 2...<br>Continuará...')"
                             title="Ver letra">
                             <i class="fa-solid fa-book"></i>
                         </button>
@@ -854,7 +199,7 @@
                             <input type="number" placeholder="Ari" class="score-input" min="0" max="10">
                             <input type="number" placeholder="Luismi" class="score-input" min="0" max="10">
                         </div>
-                        <button class="btn-twitch" title="Pedir nota al chat"><i
+                        <button class="btn-twitch" title="Pedir nota al chat" onclick="abrirVotacionTwitch('2')"><i
                                 class="fa-brands fa-twitch"></i></button>
                         <div class="final-score">-</div>
                     </div>
@@ -875,16 +220,19 @@
 
                     <div class="card-header-top">
                         <div class="author-row">
-                            <i class="fa-solid fa-user author-avatar"></i> Xenomorfo
+                            <i class="fa-solid fa-user author-avatar"></i> Artista 3
                         </div>
                         <button class="btn-golden-ticket" onclick="togglePaseOro(this)" title="Dar Pase de Oro">
                             <i class="fa-solid fa-ticket"></i>
                         </button>
                     </div>
 
-                    <div class="song-title">Españolete</div>
+                    <div class="song-title">Canción 3</div>
 
                     <div class="player-ui">
+                        <!-- AUDIO OCULTO -->
+                        <audio id="audio3" src="musica/cancion3.mp3"></audio>
+
                         <button class="play-btn" onclick="reproducir('3')"><i class="fa-solid fa-play"
                                 id="playIcon3"></i></button>
                         <div class="timeline">
@@ -895,7 +243,7 @@
 
                     <div class="scoring-row">
                         <button class="btn-yellow-small"
-                            onclick="abrirLetra('Españolete', 'Letra de Españolete...<br>Continuará...')"
+                            onclick="abrirLetra('Canción 3', 'Letra de la Canción 3...<br>Continuará...')"
                             title="Ver letra">
                             <i class="fa-solid fa-book"></i>
                         </button>
@@ -904,7 +252,7 @@
                             <input type="number" placeholder="Ari" class="score-input" min="0" max="10">
                             <input type="number" placeholder="Luismi" class="score-input" min="0" max="10">
                         </div>
-                        <button class="btn-twitch" title="Pedir nota al chat"><i
+                        <button class="btn-twitch" title="Pedir nota al chat" onclick="abrirVotacionTwitch('3')"><i
                                 class="fa-brands fa-twitch"></i></button>
                         <div class="final-score">-</div>
                     </div>
@@ -920,21 +268,24 @@
             </div>
 
             <div class="state-revealed" id="revealed4" style="display: none;">
-                <img src="https://via.placeholder.com/146/9d4edd/ffffff?text=C4" alt="Carátula" class="caratula">
+                <img src="https://via.placeholder.com/146/1ed760/ffffff?text=C4" alt="Carátula" class="caratula">
                 <div class="card-content">
 
                     <div class="card-header-top">
                         <div class="author-row">
-                            <i class="fa-solid fa-user author-avatar"></i> User_4
+                            <i class="fa-solid fa-user author-avatar"></i> Artista 4
                         </div>
                         <button class="btn-golden-ticket" onclick="togglePaseOro(this)" title="Dar Pase de Oro">
                             <i class="fa-solid fa-ticket"></i>
                         </button>
                     </div>
 
-                    <div class="song-title">Tormenta</div>
+                    <div class="song-title">Canción 4</div>
 
                     <div class="player-ui">
+                        <!-- AUDIO OCULTO -->
+                        <audio id="audio4" src="musica/cancion4.mp3"></audio>
+
                         <button class="play-btn" onclick="reproducir('4')"><i class="fa-solid fa-play"
                                 id="playIcon4"></i></button>
                         <div class="timeline">
@@ -945,7 +296,8 @@
 
                     <div class="scoring-row">
                         <button class="btn-yellow-small"
-                            onclick="abrirLetra('Tormenta', 'Letra de Tormenta...<br>Continuará...')" title="Ver letra">
+                            onclick="abrirLetra('Canción 4', 'Letra de la Canción 4...<br>Continuará...')"
+                            title="Ver letra">
                             <i class="fa-solid fa-book"></i>
                         </button>
 
@@ -953,7 +305,7 @@
                             <input type="number" placeholder="Ari" class="score-input" min="0" max="10">
                             <input type="number" placeholder="Luismi" class="score-input" min="0" max="10">
                         </div>
-                        <button class="btn-twitch" title="Pedir nota al chat"><i
+                        <button class="btn-twitch" title="Pedir nota al chat" onclick="abrirVotacionTwitch('4')"><i
                                 class="fa-brands fa-twitch"></i></button>
                         <div class="final-score">-</div>
                     </div>
@@ -969,21 +321,24 @@
             </div>
 
             <div class="state-revealed" id="revealed5" style="display: none;">
-                <img src="https://via.placeholder.com/146/fbc02d/000000?text=C5" alt="Carátula" class="caratula">
+                <img src="https://via.placeholder.com/146/1ed760/ffffff?text=C5" alt="Carátula" class="caratula">
                 <div class="card-content">
 
                     <div class="card-header-top">
                         <div class="author-row">
-                            <i class="fa-solid fa-user author-avatar"></i> User_5
+                            <i class="fa-solid fa-user author-avatar"></i> Artista 5
                         </div>
                         <button class="btn-golden-ticket" onclick="togglePaseOro(this)" title="Dar Pase de Oro">
                             <i class="fa-solid fa-ticket"></i>
                         </button>
                     </div>
 
-                    <div class="song-title">Noche de Paz</div>
+                    <div class="song-title">Canción 5</div>
 
                     <div class="player-ui">
+                        <!-- AUDIO OCULTO -->
+                        <audio id="audio5" src="musica/cancion5.mp3"></audio>
+
                         <button class="play-btn" onclick="reproducir('5')"><i class="fa-solid fa-play"
                                 id="playIcon5"></i></button>
                         <div class="timeline">
@@ -994,7 +349,7 @@
 
                     <div class="scoring-row">
                         <button class="btn-yellow-small"
-                            onclick="abrirLetra('Noche de Paz', 'Letra de Noche de Paz...<br>Continuará...')"
+                            onclick="abrirLetra('Canción 5', 'Letra de la Canción 5...<br>Continuará...')"
                             title="Ver letra">
                             <i class="fa-solid fa-book"></i>
                         </button>
@@ -1003,7 +358,7 @@
                             <input type="number" placeholder="Ari" class="score-input" min="0" max="10">
                             <input type="number" placeholder="Luismi" class="score-input" min="0" max="10">
                         </div>
-                        <button class="btn-twitch" title="Pedir nota al chat"><i
+                        <button class="btn-twitch" title="Pedir nota al chat" onclick="abrirVotacionTwitch('5')"><i
                                 class="fa-brands fa-twitch"></i></button>
                         <div class="final-score">-</div>
                     </div>
@@ -1019,21 +374,24 @@
             </div>
 
             <div class="state-revealed" id="revealed6" style="display: none;">
-                <img src="https://via.placeholder.com/146/00acc1/ffffff?text=C6" alt="Carátula" class="caratula">
+                <img src="https://via.placeholder.com/146/1ed760/ffffff?text=C6" alt="Carátula" class="caratula">
                 <div class="card-content">
 
                     <div class="card-header-top">
                         <div class="author-row">
-                            <i class="fa-solid fa-user author-avatar"></i> User_6
+                            <i class="fa-solid fa-user author-avatar"></i> Artista 6
                         </div>
                         <button class="btn-golden-ticket" onclick="togglePaseOro(this)" title="Dar Pase de Oro">
                             <i class="fa-solid fa-ticket"></i>
                         </button>
                     </div>
 
-                    <div class="song-title">Ritmo Total</div>
+                    <div class="song-title">Canción 6</div>
 
                     <div class="player-ui">
+                        <!-- AUDIO OCULTO -->
+                        <audio id="audio6" src="musica/cancion6.mp3"></audio>
+
                         <button class="play-btn" onclick="reproducir('6')"><i class="fa-solid fa-play"
                                 id="playIcon6"></i></button>
                         <div class="timeline">
@@ -1044,7 +402,7 @@
 
                     <div class="scoring-row">
                         <button class="btn-yellow-small"
-                            onclick="abrirLetra('Ritmo Total', 'Letra de Ritmo Total...<br>Continuará...')"
+                            onclick="abrirLetra('Canción 6', 'Letra de la Canción 6...<br>Continuará...')"
                             title="Ver letra">
                             <i class="fa-solid fa-book"></i>
                         </button>
@@ -1053,7 +411,7 @@
                             <input type="number" placeholder="Ari" class="score-input" min="0" max="10">
                             <input type="number" placeholder="Luismi" class="score-input" min="0" max="10">
                         </div>
-                        <button class="btn-twitch" title="Pedir nota al chat"><i
+                        <button class="btn-twitch" title="Pedir nota al chat" onclick="abrirVotacionTwitch('6')"><i
                                 class="fa-brands fa-twitch"></i></button>
                         <div class="final-score">-</div>
                     </div>
@@ -1069,21 +427,24 @@
             </div>
 
             <div class="state-revealed" id="revealed7" style="display: none;">
-                <img src="https://via.placeholder.com/146/d81b60/ffffff?text=C7" alt="Carátula" class="caratula">
+                <img src="https://via.placeholder.com/146/1ed760/ffffff?text=C7" alt="Carátula" class="caratula">
                 <div class="card-content">
 
                     <div class="card-header-top">
                         <div class="author-row">
-                            <i class="fa-solid fa-user author-avatar"></i> User_7
+                            <i class="fa-solid fa-user author-avatar"></i> Artista 7
                         </div>
                         <button class="btn-golden-ticket" onclick="togglePaseOro(this)" title="Dar Pase de Oro">
                             <i class="fa-solid fa-ticket"></i>
                         </button>
                     </div>
 
-                    <div class="song-title">Vuelo Alto</div>
+                    <div class="song-title">Canción 7</div>
 
                     <div class="player-ui">
+                        <!-- AUDIO OCULTO -->
+                        <audio id="audio7" src="musica/cancion7.mp3"></audio>
+
                         <button class="play-btn" onclick="reproducir('7')"><i class="fa-solid fa-play"
                                 id="playIcon7"></i></button>
                         <div class="timeline">
@@ -1094,7 +455,7 @@
 
                     <div class="scoring-row">
                         <button class="btn-yellow-small"
-                            onclick="abrirLetra('Vuelo Alto', 'Letra de Vuelo Alto...<br>Continuará...')"
+                            onclick="abrirLetra('Canción 7', 'Letra de la Canción 7...<br>Continuará...')"
                             title="Ver letra">
                             <i class="fa-solid fa-book"></i>
                         </button>
@@ -1103,7 +464,7 @@
                             <input type="number" placeholder="Ari" class="score-input" min="0" max="10">
                             <input type="number" placeholder="Luismi" class="score-input" min="0" max="10">
                         </div>
-                        <button class="btn-twitch" title="Pedir nota al chat"><i
+                        <button class="btn-twitch" title="Pedir nota al chat" onclick="abrirVotacionTwitch('7')"><i
                                 class="fa-brands fa-twitch"></i></button>
                         <div class="final-score">-</div>
                     </div>
@@ -1124,16 +485,19 @@
 
                     <div class="card-header-top">
                         <div class="author-row">
-                            <i class="fa-solid fa-user author-avatar"></i> User_8
+                            <i class="fa-solid fa-user author-avatar"></i> Artista 8
                         </div>
                         <button class="btn-golden-ticket" onclick="togglePaseOro(this)" title="Dar Pase de Oro">
                             <i class="fa-solid fa-ticket"></i>
                         </button>
                     </div>
 
-                    <div class="song-title">Eco Eterno</div>
+                    <div class="song-title">Canción 8</div>
 
                     <div class="player-ui">
+                        <!-- AUDIO OCULTO -->
+                        <audio id="audio8" src="musica/cancion8.mp3"></audio>
+
                         <button class="play-btn" onclick="reproducir('8')"><i class="fa-solid fa-play"
                                 id="playIcon8"></i></button>
                         <div class="timeline">
@@ -1144,7 +508,7 @@
 
                     <div class="scoring-row">
                         <button class="btn-yellow-small"
-                            onclick="abrirLetra('Eco Eterno', 'Letra de Eco Eterno...<br>Continuará...')"
+                            onclick="abrirLetra('Canción 8', 'Letra de la Canción 8...<br>Continuará...')"
                             title="Ver letra">
                             <i class="fa-solid fa-book"></i>
                         </button>
@@ -1153,7 +517,7 @@
                             <input type="number" placeholder="Ari" class="score-input" min="0" max="10">
                             <input type="number" placeholder="Luismi" class="score-input" min="0" max="10">
                         </div>
-                        <button class="btn-twitch" title="Pedir nota al chat"><i
+                        <button class="btn-twitch" title="Pedir nota al chat" onclick="abrirVotacionTwitch('8')"><i
                                 class="fa-brands fa-twitch"></i></button>
                         <div class="final-score">-</div>
                     </div>
@@ -1169,21 +533,24 @@
             </div>
 
             <div class="state-revealed" id="revealed9" style="display: none;">
-                <img src="https://via.placeholder.com/146/9d4edd/ffffff?text=C9" alt="Carátula" class="caratula">
+                <img src="https://via.placeholder.com/146/1ed760/ffffff?text=C9" alt="Carátula" class="caratula">
                 <div class="card-content">
 
                     <div class="card-header-top">
                         <div class="author-row">
-                            <i class="fa-solid fa-user author-avatar"></i> User_9
+                            <i class="fa-solid fa-user author-avatar"></i> Artista 9
                         </div>
                         <button class="btn-golden-ticket" onclick="togglePaseOro(this)" title="Dar Pase de Oro">
                             <i class="fa-solid fa-ticket"></i>
                         </button>
                     </div>
 
-                    <div class="song-title">Luz Solar</div>
+                    <div class="song-title">Canción 9</div>
 
                     <div class="player-ui">
+                        <!-- AUDIO OCULTO -->
+                        <audio id="audio9" src="musica/cancion9.mp3"></audio>
+
                         <button class="play-btn" onclick="reproducir('9')"><i class="fa-solid fa-play"
                                 id="playIcon9"></i></button>
                         <div class="timeline">
@@ -1194,7 +561,7 @@
 
                     <div class="scoring-row">
                         <button class="btn-yellow-small"
-                            onclick="abrirLetra('Luz Solar', 'Letra de Luz Solar...<br>Continuará...')"
+                            onclick="abrirLetra('Canción 9', 'Letra de la Canción 9...<br>Continuará...')"
                             title="Ver letra">
                             <i class="fa-solid fa-book"></i>
                         </button>
@@ -1203,7 +570,7 @@
                             <input type="number" placeholder="Ari" class="score-input" min="0" max="10">
                             <input type="number" placeholder="Luismi" class="score-input" min="0" max="10">
                         </div>
-                        <button class="btn-twitch" title="Pedir nota al chat"><i
+                        <button class="btn-twitch" title="Pedir nota al chat" onclick="abrirVotacionTwitch('9')"><i
                                 class="fa-brands fa-twitch"></i></button>
                         <div class="final-score">-</div>
                     </div>
@@ -1219,21 +586,24 @@
             </div>
 
             <div class="state-revealed" id="revealed10" style="display: none;">
-                <img src="https://via.placeholder.com/146/fbc02d/000000?text=C10" alt="Carátula" class="caratula">
+                <img src="https://via.placeholder.com/146/1ed760/ffffff?text=C10" alt="Carátula" class="caratula">
                 <div class="card-content">
 
                     <div class="card-header-top">
                         <div class="author-row">
-                            <i class="fa-solid fa-user author-avatar"></i> User_10
+                            <i class="fa-solid fa-user author-avatar"></i> Artista 10
                         </div>
                         <button class="btn-golden-ticket" onclick="togglePaseOro(this)" title="Dar Pase de Oro">
                             <i class="fa-solid fa-ticket"></i>
                         </button>
                     </div>
 
-                    <div class="song-title">Bajo el Mar</div>
+                    <div class="song-title">Canción 10</div>
 
                     <div class="player-ui">
+                        <!-- AUDIO OCULTO -->
+                        <audio id="audio10" src="musica/cancion10.mp3"></audio>
+
                         <button class="play-btn" onclick="reproducir('10')"><i class="fa-solid fa-play"
                                 id="playIcon10"></i></button>
                         <div class="timeline">
@@ -1244,7 +614,7 @@
 
                     <div class="scoring-row">
                         <button class="btn-yellow-small"
-                            onclick="abrirLetra('Bajo el Mar', 'Letra de Bajo el Mar...<br>Continuará...')"
+                            onclick="abrirLetra('Canción 10', 'Letra de la Canción 10...<br>Continuará...')"
                             title="Ver letra">
                             <i class="fa-solid fa-book"></i>
                         </button>
@@ -1253,7 +623,7 @@
                             <input type="number" placeholder="Ari" class="score-input" min="0" max="10">
                             <input type="number" placeholder="Luismi" class="score-input" min="0" max="10">
                         </div>
-                        <button class="btn-twitch" title="Pedir nota al chat"><i
+                        <button class="btn-twitch" title="Pedir nota al chat" onclick="abrirVotacionTwitch('10')"><i
                                 class="fa-brands fa-twitch"></i></button>
                         <div class="final-score">-</div>
                     </div>
@@ -1269,21 +639,24 @@
             </div>
 
             <div class="state-revealed" id="revealed11" style="display: none;">
-                <img src="https://via.placeholder.com/146/00acc1/ffffff?text=C11" alt="Carátula" class="caratula">
+                <img src="https://via.placeholder.com/146/1ed760/ffffff?text=C11" alt="Carátula" class="caratula">
                 <div class="card-content">
 
                     <div class="card-header-top">
                         <div class="author-row">
-                            <i class="fa-solid fa-user author-avatar"></i> User_11
+                            <i class="fa-solid fa-user author-avatar"></i> Artista 11
                         </div>
                         <button class="btn-golden-ticket" onclick="togglePaseOro(this)" title="Dar Pase de Oro">
                             <i class="fa-solid fa-ticket"></i>
                         </button>
                     </div>
 
-                    <div class="song-title">Fuego Vivo</div>
+                    <div class="song-title">Canción 11</div>
 
                     <div class="player-ui">
+                        <!-- AUDIO OCULTO -->
+                        <audio id="audio11" src="musica/cancion11.mp3"></audio>
+
                         <button class="play-btn" onclick="reproducir('11')"><i class="fa-solid fa-play"
                                 id="playIcon11"></i></button>
                         <div class="timeline">
@@ -1294,7 +667,7 @@
 
                     <div class="scoring-row">
                         <button class="btn-yellow-small"
-                            onclick="abrirLetra('Fuego Vivo', 'Letra de Fuego Vivo...<br>Continuará...')"
+                            onclick="abrirLetra('Canción 11', 'Letra de la Canción 11...<br>Continuará...')"
                             title="Ver letra">
                             <i class="fa-solid fa-book"></i>
                         </button>
@@ -1303,7 +676,7 @@
                             <input type="number" placeholder="Ari" class="score-input" min="0" max="10">
                             <input type="number" placeholder="Luismi" class="score-input" min="0" max="10">
                         </div>
-                        <button class="btn-twitch" title="Pedir nota al chat"><i
+                        <button class="btn-twitch" title="Pedir nota al chat" onclick="abrirVotacionTwitch('11')"><i
                                 class="fa-brands fa-twitch"></i></button>
                         <div class="final-score">-</div>
                     </div>
@@ -1319,21 +692,24 @@
             </div>
 
             <div class="state-revealed" id="revealed12" style="display: none;">
-                <img src="https://via.placeholder.com/146/d81b60/ffffff?text=C12" alt="Carátula" class="caratula">
+                <img src="https://via.placeholder.com/146/1ed760/ffffff?text=C12" alt="Carátula" class="caratula">
                 <div class="card-content">
 
                     <div class="card-header-top">
                         <div class="author-row">
-                            <i class="fa-solid fa-user author-avatar"></i> User_12
+                            <i class="fa-solid fa-user author-avatar"></i> Artista 12
                         </div>
                         <button class="btn-golden-ticket" onclick="togglePaseOro(this)" title="Dar Pase de Oro">
                             <i class="fa-solid fa-ticket"></i>
                         </button>
                     </div>
 
-                    <div class="song-title">Caminante</div>
+                    <div class="song-title">Canción 12</div>
 
                     <div class="player-ui">
+                        <!-- AUDIO OCULTO -->
+                        <audio id="audio12" src="musica/cancion12.mp3"></audio>
+
                         <button class="play-btn" onclick="reproducir('12')"><i class="fa-solid fa-play"
                                 id="playIcon12"></i></button>
                         <div class="timeline">
@@ -1344,7 +720,7 @@
 
                     <div class="scoring-row">
                         <button class="btn-yellow-small"
-                            onclick="abrirLetra('Caminante', 'Letra de Caminante...<br>Continuará...')"
+                            onclick="abrirLetra('Canción 12', 'Letra de la Canción 12...<br>Continuará...')"
                             title="Ver letra">
                             <i class="fa-solid fa-book"></i>
                         </button>
@@ -1353,7 +729,7 @@
                             <input type="number" placeholder="Ari" class="score-input" min="0" max="10">
                             <input type="number" placeholder="Luismi" class="score-input" min="0" max="10">
                         </div>
-                        <button class="btn-twitch" title="Pedir nota al chat"><i
+                        <button class="btn-twitch" title="Pedir nota al chat" onclick="abrirVotacionTwitch('12')"><i
                                 class="fa-brands fa-twitch"></i></button>
                         <div class="final-score">-</div>
                     </div>
@@ -1374,16 +750,19 @@
 
                     <div class="card-header-top">
                         <div class="author-row">
-                            <i class="fa-solid fa-user author-avatar"></i> User_13
+                            <i class="fa-solid fa-user author-avatar"></i> Artista 13
                         </div>
                         <button class="btn-golden-ticket" onclick="togglePaseOro(this)" title="Dar Pase de Oro">
                             <i class="fa-solid fa-ticket"></i>
                         </button>
                     </div>
 
-                    <div class="song-title">Estrella Fugaz</div>
+                    <div class="song-title">Canción 13</div>
 
                     <div class="player-ui">
+                        <!-- AUDIO OCULTO -->
+                        <audio id="audio13" src="musica/cancion13.mp3"></audio>
+
                         <button class="play-btn" onclick="reproducir('13')"><i class="fa-solid fa-play"
                                 id="playIcon13"></i></button>
                         <div class="timeline">
@@ -1394,7 +773,7 @@
 
                     <div class="scoring-row">
                         <button class="btn-yellow-small"
-                            onclick="abrirLetra('Estrella Fugaz', 'Letra de Estrella Fugaz...<br>Continuará...')"
+                            onclick="abrirLetra('Canción 13', 'Letra de la Canción 13...<br>Continuará...')"
                             title="Ver letra">
                             <i class="fa-solid fa-book"></i>
                         </button>
@@ -1403,7 +782,7 @@
                             <input type="number" placeholder="Ari" class="score-input" min="0" max="10">
                             <input type="number" placeholder="Luismi" class="score-input" min="0" max="10">
                         </div>
-                        <button class="btn-twitch" title="Pedir nota al chat"><i
+                        <button class="btn-twitch" title="Pedir nota al chat" onclick="abrirVotacionTwitch('13')"><i
                                 class="fa-brands fa-twitch"></i></button>
                         <div class="final-score">-</div>
                     </div>
@@ -1419,21 +798,24 @@
             </div>
 
             <div class="state-revealed" id="revealed14" style="display: none;">
-                <img src="https://via.placeholder.com/146/9d4edd/ffffff?text=C14" alt="Carátula" class="caratula">
+                <img src="https://via.placeholder.com/146/1ed760/ffffff?text=C14" alt="Carátula" class="caratula">
                 <div class="card-content">
 
                     <div class="card-header-top">
                         <div class="author-row">
-                            <i class="fa-solid fa-user author-avatar"></i> User_14
+                            <i class="fa-solid fa-user author-avatar"></i> Artista 14
                         </div>
                         <button class="btn-golden-ticket" onclick="togglePaseOro(this)" title="Dar Pase de Oro">
                             <i class="fa-solid fa-ticket"></i>
                         </button>
                     </div>
 
-                    <div class="song-title">Mundo Oscuro</div>
+                    <div class="song-title">Canción 14</div>
 
                     <div class="player-ui">
+                        <!-- AUDIO OCULTO -->
+                        <audio id="audio14" src="musica/cancion14.mp3"></audio>
+
                         <button class="play-btn" onclick="reproducir('14')"><i class="fa-solid fa-play"
                                 id="playIcon14"></i></button>
                         <div class="timeline">
@@ -1444,7 +826,7 @@
 
                     <div class="scoring-row">
                         <button class="btn-yellow-small"
-                            onclick="abrirLetra('Mundo Oscuro', 'Letra de Mundo Oscuro...<br>Continuará...')"
+                            onclick="abrirLetra('Canción 14', 'Letra de la Canción 14...<br>Continuará...')"
                             title="Ver letra">
                             <i class="fa-solid fa-book"></i>
                         </button>
@@ -1453,7 +835,7 @@
                             <input type="number" placeholder="Ari" class="score-input" min="0" max="10">
                             <input type="number" placeholder="Luismi" class="score-input" min="0" max="10">
                         </div>
-                        <button class="btn-twitch" title="Pedir nota al chat"><i
+                        <button class="btn-twitch" title="Pedir nota al chat" onclick="abrirVotacionTwitch('14')"><i
                                 class="fa-brands fa-twitch"></i></button>
                         <div class="final-score">-</div>
                     </div>
@@ -1469,21 +851,24 @@
             </div>
 
             <div class="state-revealed" id="revealed15" style="display: none;">
-                <img src="https://via.placeholder.com/146/fbc02d/000000?text=C15" alt="Carátula" class="caratula">
+                <img src="https://via.placeholder.com/146/1ed760/ffffff?text=C15" alt="Carátula" class="caratula">
                 <div class="card-content">
 
                     <div class="card-header-top">
                         <div class="author-row">
-                            <i class="fa-solid fa-user author-avatar"></i> User_15
+                            <i class="fa-solid fa-user author-avatar"></i> Artista 15
                         </div>
                         <button class="btn-golden-ticket" onclick="togglePaseOro(this)" title="Dar Pase de Oro">
                             <i class="fa-solid fa-ticket"></i>
                         </button>
                     </div>
 
-                    <div class="song-title">Renacer</div>
+                    <div class="song-title">Canción 15</div>
 
                     <div class="player-ui">
+                        <!-- AUDIO OCULTO -->
+                        <audio id="audio15" src="musica/cancion15.mp3"></audio>
+
                         <button class="play-btn" onclick="reproducir('15')"><i class="fa-solid fa-play"
                                 id="playIcon15"></i></button>
                         <div class="timeline">
@@ -1494,7 +879,8 @@
 
                     <div class="scoring-row">
                         <button class="btn-yellow-small"
-                            onclick="abrirLetra('Renacer', 'Letra de Renacer...<br>Continuará...')" title="Ver letra">
+                            onclick="abrirLetra('Canción 15', 'Letra de la Canción 15...<br>Continuará...')"
+                            title="Ver letra">
                             <i class="fa-solid fa-book"></i>
                         </button>
 
@@ -1502,7 +888,7 @@
                             <input type="number" placeholder="Ari" class="score-input" min="0" max="10">
                             <input type="number" placeholder="Luismi" class="score-input" min="0" max="10">
                         </div>
-                        <button class="btn-twitch" title="Pedir nota al chat"><i
+                        <button class="btn-twitch" title="Pedir nota al chat" onclick="abrirVotacionTwitch('15')"><i
                                 class="fa-brands fa-twitch"></i></button>
                         <div class="final-score">-</div>
                     </div>
@@ -1510,6 +896,7 @@
             </div>
         </div>
     </div>
+
     <div id="lyricsModal" class="modal-overlay">
         <div class="modal-content">
             <button class="close-modal" onclick="cerrarLetra()"><i class="fa-solid fa-xmark"></i></button>
@@ -1519,7 +906,19 @@
             </div>
         </div>
     </div>
+    <div id="twitchModal" class="modal-overlay">
+        <div class="modal-content twitch-modal">
+            <button class="close-modal" onclick="cerrarTwitch()"><i class="fa-solid fa-xmark"></i></button>
+            <h2 class="modal-title" style="color: #9146FF;"><i class="fa-brands fa-twitch"></i> Votación del Chat</h2>
 
+            <div class="timer-wrapper">
+                <div id="twitchTimer" class="timer-circle">30</div>
+            </div>
+
+            <div id="twitchVotesList" class="votes-list">
+            </div>
+        </div>
+    </div>
     <script src="script.js"></script>
 </body>
 

@@ -55,7 +55,6 @@ header h1 {
     overflow: hidden;
 }
 
-/* Estado: Reproduciendo (Resplandor morado) */
 .card.playing {
     border-color: var(--purple-glow);
     box-shadow: 0 0 25px rgba(157, 78, 221, 0.6), inset 0 0 10px rgba(157, 78, 221, 0.3);
@@ -107,7 +106,6 @@ header h1 {
     gap: 15px;
 }
 
-/* Carátula */
 .caratula {
     width: 146px;
     height: 146px;
@@ -116,7 +114,6 @@ header h1 {
     border: 1px solid rgba(255,255,255,0.1);
 }
 
-/* Contenido derecho */
 .card-content {
     flex-grow: 1;
     display: flex;
@@ -147,7 +144,6 @@ header h1 {
     text-overflow: ellipsis;
 }
 
-/* Reproductor falso visual */
 .player-ui {
     background-color: var(--bg-player);
     border-radius: 6px;
@@ -187,7 +183,6 @@ header h1 {
 
 .time-text { font-size: 0.75rem; color: var(--text-muted); }
 
-/* Fila de puntuaciones y Twitch */
 .scoring-row {
     display: flex;
     align-items: center;
@@ -259,7 +254,6 @@ header h1 {
     color: #e0e6ed;
 }
 
-/* Control de Volumen */
 .top-controls {
     display: flex;
     justify-content: flex-end;
@@ -294,7 +288,6 @@ header h1 {
     cursor: pointer;
 }
 
-/* Títulos Naranjas */
 .orange-title {
     color: #ff6a33;
     font-size: 2.2rem;
@@ -304,9 +297,8 @@ header h1 {
     font-weight: 800;
 }
 
-/* Lista de Reglas */
 .rules-container {
-    background-color: #04241b; /* Verde oscuro de la captura */
+    background-color: #04241b; 
     padding: 40px;
     border-radius: 12px;
     margin-bottom: 40px;
@@ -331,7 +323,7 @@ header h1 {
     color: #8b9d96;
     margin-top: 4px;
     font-size: 1.2rem;
-    transform: rotate(-45deg); /* Inclinación ligera del micro como en la imagen */
+    transform: rotate(-45deg);
 }
 
 .custom-list strong {
@@ -345,7 +337,6 @@ header h1 {
     margin-top: 5px;
 }
 
-/* Contenedor de Créditos */
 .credits-container {
     background-color: #04241b;
     padding: 40px;
@@ -359,7 +350,7 @@ header h1 {
 }
 
 .credit-item {
-    background-color: #0a3328; /* Verde ligeramente más claro para las cajas */
+    background-color: #0a3328; 
     display: flex;
     align-items: center;
     padding: 12px 20px;
@@ -401,10 +392,6 @@ header h1 {
     font-style: italic;
 }
 
-/* =========================================
-   NUEVOS ESTILOS: TICKET DORADO Y TÍTULOS
-   ========================================= */
-
 .card-header-top {
     display: flex;
     justify-content: space-between;
@@ -418,10 +405,9 @@ header h1 {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    color: #fbc02d; /* Título en amarillo/dorado como en la captura */
+    color: #fbc02d;
 }
 
-/* Botón Pase de Oro (Ticket) */
 .btn-golden-ticket {
     background-color: #1a1a1a;
     color: #fbc02d;
@@ -433,7 +419,6 @@ header h1 {
     font-size: 0.9rem;
 }
 
-/* Estado Activo del Pase de Oro */
 .btn-golden-ticket.active {
     background-color: #fbc02d;
     color: #000;
@@ -441,26 +426,22 @@ header h1 {
     transform: scale(1.1);
 }
 
-/* =========================================
-   NUEVOS ESTILOS: MODAL DE LA LETRA
-   ========================================= */
-
 .modal-overlay {
-    display: none; /* Oculto por defecto */
+    display: none; 
     position: fixed;
     top: 0; 
     left: 0; 
     width: 100%; 
     height: 100%;
     background: rgba(0, 0, 0, 0.7);
-    z-index: 1000; /* Asegura que esté por encima de todo */
+    z-index: 1000; 
     justify-content: center;
     align-items: center;
     backdrop-filter: blur(5px);
 }
 
 .modal-content {
-    background-color: #0a3328; /* Verde oscuro acorde a la captura */
+    background-color: #0a3328; 
     border-radius: 12px;
     padding: 30px 40px;
     width: 90%;
@@ -506,7 +487,6 @@ header h1 {
     font-size: 1.05rem;
 }
 
-/* Estilizar la barra de scroll de la letra */
 .modal-lyrics::-webkit-scrollbar { 
     width: 6px; 
 }
@@ -517,4 +497,59 @@ header h1 {
 .modal-lyrics::-webkit-scrollbar-thumb { 
     background: #e0e6ed; 
     border-radius: 10px; 
+}
+
+/* === MODAL TWITCH === */
+.twitch-modal {
+    background-color: #18181B; /* Color oscuro de Twitch */
+    border: 2px solid #9146FF;
+    max-width: 400px;
+}
+
+.timer-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.timer-circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 6px solid #1ed760;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: bold;
+    color: white;
+    background-color: #0b1411;
+}
+
+.votes-list {
+    height: 250px;
+    overflow-y: auto;
+    background-color: #0e0e10;
+    border-radius: 8px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.vote-item {
+    display: flex;
+    justify-content: space-between;
+    background-color: #1f1f23;
+    padding: 8px 12px;
+    border-radius: 4px;
+    animation: fadeIn 0.3s ease;
+}
+
+.vote-user { color: #bf94ff; font-weight: bold; }
+.vote-score { color: white; font-size: 1.2rem; font-weight: bold; }
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
