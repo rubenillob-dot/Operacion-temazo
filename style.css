@@ -834,3 +834,41 @@ header h1 {
     font-weight: bold;
     letter-spacing: 1px;
 }
+
+/* =========================================
+   ANIMACIÓN AL REVELAR CANCIÓN
+   ========================================= */
+@keyframes aparecerLento {
+    0% { 
+        opacity: 0; 
+        transform: scale(0.95); 
+    }
+    100% { 
+        opacity: 1; 
+        transform: scale(1); 
+    }
+}
+
+.animacion-revelar {
+    animation: aparecerLento 1.5s ease-out forwards;
+}
+
+/* =========================================
+   ANIMACIÓN DE LOS 8 FINALISTAS (REDOBLE)
+   ========================================= */
+@keyframes aparecerFinalista {
+    0% { 
+        opacity: 0; 
+        transform: scale(0.8) translateY(20px); 
+        filter: brightness(2); 
+    }
+    100% { 
+        opacity: 1; 
+        transform: scale(1) translateY(0); 
+        filter: brightness(1); 
+    }
+}
+
+.animacion-finalista {
+    animation: aparecerFinalista 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}

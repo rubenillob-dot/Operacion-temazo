@@ -76,10 +76,27 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+
 // === FUNCIONES DE LAS CARTAS ===
 function revelarCancion(id) {
+    // 1. Ocultamos la portada con el icono musical
     document.getElementById('hidden' + id).style.display = 'none';
-    document.getElementById('revealed' + id).style.display = 'flex';
+
+    // 2. Seleccionamos la parte revelada de la carta
+    let cartaRevelada = document.getElementById('revealed' + id);
+
+    // 3. La mostramos en pantalla
+    cartaRevelada.style.display = 'flex';
+
+    // 4. Le aplicamos la clase CSS que hace la animación lenta
+    cartaRevelada.classList.add('animacion-revelar');
+
+    // 5. Reproducimos el sonido épico
+    let sonidoEfecto = document.getElementById('sonidoRevelar');
+    if (sonidoEfecto) {
+        sonidoEfecto.currentTime = 0; // Lo reinicia por si pulsas otra carta muy rápido
+        sonidoEfecto.play().catch(e => console.log("Esperando a que añadas el archivo revelar.mp3"));
+    }
 }
 
 function reproducir(id) {
@@ -89,7 +106,7 @@ function reproducir(id) {
 
     if (!audioActual || !audioActual.src || audioActual.src.endsWith("html")) {
         alert("Añade una canción .mp3 en el HTML para que suene.");
-        return; 
+        return;
     }
 
     if (cancionSonandoId === id) {
@@ -153,16 +170,17 @@ window.onclick = function (event) {
 // === ACTUALIZAR NOTAS (50% Ari / 50% Luismi) ===
 function actualizarNotaMedia(id) {
     const card = document.getElementById('cancion' + id);
-    if(card) {
+    if (card) {
         const inputs = card.querySelectorAll('.score-input');
         const ari = parseFloat(inputs[0].value) || 0;
         const luismi = parseFloat(inputs[1].value) || 0;
-        
+
         // Nueva fórmula: 50% para cada uno
-        const final = ((ari * 0.5) + (luismi * 0.5)).toFixed(1); 
+        const final = ((ari * 0.5) + (luismi * 0.5)).toFixed(1);
         card.querySelector('.final-score').innerText = final;
     }
 }
+
 
 // === LÓGICA DEL TORNEO (FASE FINAL) ===
 let clasificados = [];
@@ -171,33 +189,34 @@ function empezarFaseFinal() {
     let pasesDeOro = [];
     let restoCanciones = [];
 
-    for(let i=1; i<=15; i++) {
-        let card = document.getElementById('cancion'+i);
-        if(!card) continue;
+    // Recoger las 15 tarjetas
+    for (let i = 1; i <= 15; i++) {
+        let card = document.getElementById('cancion' + i);
+        if (!card) continue;
 
         let tituloEl = card.querySelector('.song-title');
         let autorEl = card.querySelector('.author-row');
         let imgEl = card.querySelector('.caratula');
         let audioEl = card.querySelector('audio');
-        
+
         let titulo = tituloEl ? tituloEl.innerText : 'Canción ' + i;
         let autor = autorEl ? autorEl.innerText.trim() : 'Artista ' + i;
         let imagenSrc = (imgEl && imgEl.getAttribute('src')) ? imgEl.getAttribute('src') : '';
         let audioSrc = (audioEl && audioEl.getAttribute('src')) ? audioEl.getAttribute('src') : '';
-        
+
         let botonOro = card.querySelector('.btn-golden-ticket');
         let esPaseOro = botonOro ? botonOro.classList.contains('active') : false;
-        
+
         let inputs = card.querySelectorAll('.score-input');
         let notaAri = inputs[0] ? (parseFloat(inputs[0].value) || 0) : 0;
         let notaLuismi = inputs[1] ? (parseFloat(inputs[1].value) || 0) : 0;
-        
-        // Nueva fórmula: 50% Ari + 50% Luismi
+
+        // 50% Ari + 50% Luismi
         let notaFinal = (notaAri * 0.5) + (notaLuismi * 0.5);
 
         let datosCancion = { titulo, autor, imagenSrc, audioSrc, nota: notaFinal, id: i };
 
-        if(esPaseOro) {
+        if (esPaseOro) {
             pasesDeOro.push(datosCancion);
         } else {
             restoCanciones.push(datosCancion);
@@ -212,17 +231,39 @@ function empezarFaseFinal() {
         clasificados = clasificados.concat(restoCanciones.slice(0, puestosRestantes));
     }
 
-    for(let j=0; j<8; j++) {
-        let box = document.getElementById('caja'+(j+1));
-        if(box && clasificados[j]) {
-            generarContenidoCaja(box, clasificados[j]);
-        }
-    }
-
+    // 1. Mostrar el bracket y bajar la pantalla PRIMERO
     const bracketSection = document.getElementById('bracket-section');
-    if(bracketSection) {
+    if (bracketSection) {
         bracketSection.style.display = 'flex';
         bracketSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // 2. Reproducir el sonido de tambores (se ajustará con la barra de volumen general)
+    let sonidoTambores = document.getElementById('sonidoTambores');
+    if (sonidoTambores) {
+        sonidoTambores.currentTime = 0;
+        sonidoTambores.play().catch(e => console.log("Añade tambores.mp3 en la carpeta musica"));
+    }
+
+    // 3. Rellenar las cajas con la animación escalonada
+    for (let j = 0; j < 8; j++) {
+        let box = document.getElementById('caja' + (j + 1));
+        if (box) {
+            // Ocultamos la caja para que no se vea antes de la animación
+            box.style.opacity = '0';
+            box.classList.remove('animacion-finalista');
+
+            if (clasificados[j]) {
+                generarContenidoCaja(box, clasificados[j]);
+
+                // Efecto "cascada": Cada caja tarda 400ms más que la anterior en salir
+                // Empiezan a salir medio segundo (500ms) después de que la cámara empiece a bajar
+                setTimeout(() => {
+                    box.classList.add('animacion-finalista');
+                    box.style.opacity = '1';
+                }, (j * 400) + 500);
+            }
+        }
     }
 }
 
@@ -240,13 +281,14 @@ function generarContenidoCaja(elementoCaja, datos) {
 }
 
 // === LÓGICA DE BATALLAS ===
+// === LÓGICA DE BATALLAS ===
 function abrirBatalla(idCajaA, idCajaB, idCajaGanadorDestino) {
     let cajaA = document.getElementById(idCajaA);
     let cajaB = document.getElementById(idCajaB);
 
-    if(!cajaA || !cajaB) return;
-    if(cajaA.classList.contains('empty') || cajaA.classList.contains('unknown') ||
-       cajaB.classList.contains('empty') || cajaB.classList.contains('unknown')) {
+    if (!cajaA || !cajaB) return;
+    if (cajaA.classList.contains('empty') || cajaA.classList.contains('unknown') ||
+        cajaB.classList.contains('empty') || cajaB.classList.contains('unknown')) {
         alert("Aún no se han decidido los contendientes de este cruce.");
         return;
     }
@@ -254,28 +296,135 @@ function abrirBatalla(idCajaA, idCajaB, idCajaGanadorDestino) {
     let datosA = cajaA.querySelector('.bracket-content');
     let datosB = cajaB.querySelector('.bracket-content');
 
+    let tituloA = datosA.getAttribute('data-titulo');
+    let tituloB = datosB.getAttribute('data-titulo');
+
+    // 1. Pintar Textos e Imágenes
     document.getElementById('imgA').src = datosA.getAttribute('data-img');
-    document.getElementById('tituloA').innerText = datosA.getAttribute('data-titulo');
-    
+    document.getElementById('tituloA').innerText = tituloA;
+
     document.getElementById('imgB').src = datosB.getAttribute('data-img');
-    document.getElementById('tituloB').innerText = datosB.getAttribute('data-titulo');
+    document.getElementById('tituloB').innerText = tituloB;
 
-    let btnA = document.getElementById('btnGanadorA');
-    let btnB = document.getElementById('btnGanadorB');
+    document.getElementById('nombreVotaA').innerText = tituloA;
+    document.getElementById('nombreVotaB').innerText = tituloB;
 
-    btnA.onclick = () => declararVencedor(datosA, idCajaGanadorDestino);
-    btnB.onclick = () => declararVencedor(datosB, idCajaGanadorDestino);
+    // 2. Cargar los audios correspondientes en los reproductores
+    let audioSrcA = datosA.getAttribute('data-audio');
+    let audioSrcB = datosB.getAttribute('data-audio');
+
+    document.getElementById('audioBatallaA').src = audioSrcA || '';
+    document.getElementById('audioBatallaB').src = audioSrcB || '';
+
+    // 3. Resetear las barras visuales
+    document.getElementById('playIconBatallaA').className = 'fa-solid fa-play';
+    document.getElementById('playIconBatallaB').className = 'fa-solid fa-play';
+    document.getElementById('progressBatallaA').style.width = '0%';
+    document.getElementById('progressBatallaB').style.width = '0%';
+    document.getElementById('timeBatallaA').innerText = '0:00 / 0:00';
+    document.getElementById('timeBatallaB').innerText = '0:00 / 0:00';
+
+    // 4. Configurar botones
+    document.getElementById('btnGanadorA').onclick = () => declararVencedor(datosA, idCajaGanadorDestino);
+    document.getElementById('btnGanadorB').onclick = () => declararVencedor(datosB, idCajaGanadorDestino);
 
     document.getElementById('batallaModal').style.display = 'flex';
 }
 
 function cerrarBatalla() {
     document.getElementById('batallaModal').style.display = 'none';
+    // Al cerrar la ventana, paramos cualquier audio de batalla que estuviera sonando
+    let audioA = document.getElementById('audioBatallaA');
+    let audioB = document.getElementById('audioBatallaB');
+    if (audioA) { audioA.pause(); audioA.currentTime = 0; }
+    if (audioB) { audioB.pause(); audioB.currentTime = 0; }
 }
+
+function reproducirBatalla(lado) {
+    // Si estaba sonando una canción del fondo (la principal), la pausamos
+    if (cancionSonandoId !== null) {
+        let audioFondo = document.getElementById('audio' + cancionSonandoId);
+        let iconoFondo = document.getElementById('playIcon' + cancionSonandoId);
+        if (audioFondo) audioFondo.pause();
+        if (iconoFondo) {
+            iconoFondo.classList.remove('fa-pause');
+            iconoFondo.classList.add('fa-play');
+        }
+    }
+
+    const audioA = document.getElementById('audioBatallaA');
+    const audioB = document.getElementById('audioBatallaB');
+    const iconA = document.getElementById('playIconBatallaA');
+    const iconB = document.getElementById('playIconBatallaB');
+
+    const audioActual = (lado === 'A') ? audioA : audioB;
+    const iconoActual = (lado === 'A') ? iconA : iconB;
+    const audioRival = (lado === 'A') ? audioB : audioA;
+    const iconoRival = (lado === 'A') ? iconB : iconA;
+
+    if (!audioActual.src || audioActual.src.endsWith("html")) {
+        alert("No hay canción añadida a este participante.");
+        return;
+    }
+
+    // El volumen hereda el de la barra general de arriba a la derecha
+    const volumeSlider = document.querySelector('.volume-slider');
+    if (volumeSlider) audioActual.volume = volumeSlider.value / 100;
+
+    if (audioActual.paused) {
+        // Pausar al rival si estaba sonando
+        audioRival.pause();
+        iconoRival.className = 'fa-solid fa-play';
+        // Reproducir
+        audioActual.play();
+        iconoActual.className = 'fa-solid fa-pause';
+    } else {
+        audioActual.pause();
+        iconoActual.className = 'fa-solid fa-play';
+    }
+}
+
+// === MOTOR DE BARRAS DE PROGRESO DE LA BATALLA ===
+// (Esto asegúrate de pegarlo fuera de otras funciones, por ejemplo debajo de reproducirBatalla)
+document.addEventListener('DOMContentLoaded', () => {
+    ['A', 'B'].forEach(lado => {
+        const audio = document.getElementById('audioBatalla' + lado);
+        if (audio) {
+            audio.addEventListener('timeupdate', function () {
+                const progress = document.getElementById('progressBatalla' + lado);
+                const timeText = document.getElementById('timeBatalla' + lado);
+                if (this.duration) {
+                    progress.style.width = (this.currentTime / this.duration) * 100 + '%';
+                    const currentMins = Math.floor(this.currentTime / 60);
+                    const currentSecs = Math.floor(this.currentTime % 60).toString().padStart(2, '0');
+                    const totalMins = Math.floor(this.duration / 60);
+                    const totalSecs = Math.floor(this.duration % 60).toString().padStart(2, '0');
+                    timeText.innerText = `${currentMins}:${currentSecs} / ${totalMins}:${totalSecs}`;
+                }
+            });
+            audio.addEventListener('ended', function () {
+                document.getElementById('playIconBatalla' + lado).className = 'fa-solid fa-play';
+                document.getElementById('progressBatalla' + lado).style.width = '0%';
+            });
+
+            // Permitir clic para avanzar
+            const timeline = document.getElementById('timelineBatalla' + lado);
+            if (timeline) {
+                timeline.addEventListener('click', function (e) {
+                    if (audio.duration) {
+                        const rect = this.getBoundingClientRect();
+                        const clickX = e.clientX - rect.left;
+                        audio.currentTime = (clickX / rect.width) * audio.duration;
+                    }
+                });
+            }
+        }
+    });
+});
 
 function declararVencedor(datosHtmlNode, idCajaDestino) {
     let cajaDestino = document.getElementById(idCajaDestino);
-    
+
     let datosParaPintar = {
         imagenSrc: datosHtmlNode.getAttribute('data-img'),
         titulo: datosHtmlNode.getAttribute('data-titulo'),
@@ -284,9 +433,14 @@ function declararVencedor(datosHtmlNode, idCajaDestino) {
     };
 
     generarContenidoCaja(cajaDestino, datosParaPintar);
-    
-    if(idCajaDestino === 'campeon') {
+
+    if (idCajaDestino === 'campeon') {
         cajaDestino.classList.add('winner-box');
+
+        // === NUEVO: Hacemos que el cuadro del campeón se pueda clicar ===
+        cajaDestino.style.cursor = 'pointer';
+        cajaDestino.onclick = () => abrirGanador(datosParaPintar);
+
         setTimeout(() => {
             abrirGanador(datosParaPintar);
         }, 1000);
@@ -306,7 +460,7 @@ function abrirGanador(datos) {
     document.getElementById('winnerImg').src = datos.imagenSrc;
     document.getElementById('winnerTitle').innerText = datos.titulo;
     document.getElementById('winnerAuthor').innerText = datos.autor;
-    
+
     let audioGanador = document.getElementById('winnerAudio');
     if (datos.audioSrc) {
         audioGanador.src = datos.audioSrc;

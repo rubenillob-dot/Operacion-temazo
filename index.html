@@ -16,6 +16,9 @@
         <h1>Operación Temazo 1</h1>
     </header>
 
+    <audio id="sonidoRevelar" src="efectos/audiorevelacion.mp3"></audio>
+    <audio id="sonidoTambores" src="efectos/redobletambor.mp3"></audio>
+
     <div class="intro-section">
         <div class="top-controls">
             <div class="volume-slider-container">
@@ -39,7 +42,8 @@
                     </span>
                 </li>
                 <li><i class="fa-solid fa-microphone-lines icon-bullet"></i><span>Cada miembro del jurado tiene
-                        <strong>un pase de oro <i class="fa-solid fa-ticket"></i></strong>, (el chat tambien se tendra que poner de acuerdo para dar un tickect dorado)que usará para pasar
+                        <strong>un pase de oro <i class="fa-solid fa-ticket"></i></strong>, (el chat tambien se tendra
+                        que poner de acuerdo para dar un tickect dorado)que usará para pasar
                         directamente una canción a la <strong>fase final</strong></span></li>
                 <li><i class="fa-solid fa-microphone-lines icon-bullet"></i><span>Al terminar esta primera fase, las
                         <strong>5 canciones mejor puntuadas</strong> y las <strong>3 canciones que tengan el pase de oro
@@ -658,17 +662,21 @@
 
     <div class="fase-final-section">
         <h2 class="gradient-title">FASE FINAL</h2>
-        <ul class="custom-list">
-            <li><i class="fa-solid fa-microphone icon-bullet"></i><span>En esta fase las <strong>5 canciones mejor
-                        puntuadas</strong> y las <strong>3 canciones que tengan el pase de oro <i
-                            class="fa-solid fa-ticket" style="color: #fbc02d;"></i></strong> se enfrentarán en una
-                    eliminatoria</span></li>
-            <li><i class="fa-solid fa-microphone icon-bullet"></i><span>En cada enfrentamiento, el <strong>jurado junto
-                        al chat
-                        decidirá la canción ganadora mediante encuestas de A o B</strong>, la cual avanzará al siguiente
-                    enfrentamiento</span></li>
 
+        <ul class="custom-list">
+            <li>
+                <i class="fa-solid fa-microphone icon-bullet"></i>
+                <span>En esta fase las <strong>5 canciones mejor puntuadas</strong> y las <strong>3 canciones que tengan
+                        el pase de oro <i class="fa-solid fa-ticket" style="color: #fbc02d;"></i></strong> se
+                    enfrentarán en una eliminatoria</span>
+            </li>
+            <li>
+                <i class="fa-solid fa-microphone icon-bullet"></i>
+                <span>En cada enfrentamiento, el <strong>jurado junto al chat decidirá la canción ganadora mediante
+                        encuestas de A o B</strong>, la cual avanzará al siguiente enfrentamiento</span>
+            </li>
         </ul>
+
         <div class="btn-container">
             <button class="btn-outline-blue" onclick="empezarFaseFinal()">EMPEZAR FASE FINAL</button>
         </div>
@@ -733,23 +741,51 @@
     <div id="batallaModal" class="modal-overlay">
         <div class="modal-content modal-batalla-bg">
             <button class="close-modal" onclick="cerrarBatalla()"><i class="fa-solid fa-xmark"></i></button>
+
             <div class="batalla-layout">
                 <div class="contendiente" id="contendienteA">
                     <img src="" class="batalla-img" id="imgA">
                     <h3 class="batalla-title" id="tituloA">Canción A</h3>
+
+                    <div class="player-ui" style="width: 100%; margin-bottom: 15px;">
+                        <audio id="audioBatallaA" src=""></audio>
+                        <button class="play-btn" onclick="reproducirBatalla('A')"><i class="fa-solid fa-play"
+                                id="playIconBatallaA"></i></button>
+                        <div class="timeline" id="timelineBatallaA" style="cursor: pointer;">
+                            <div class="timeline-progress" id="progressBatallaA" style="width: 0%;"></div>
+                        </div>
+                        <span class="time-text" id="timeBatallaA"
+                            style="font-size: 0.75rem; color: var(--text-muted);">0:00 / 0:00</span>
+                    </div>
+
                     <button class="btn-vencedor" id="btnGanadorA">VENCEDOR</button>
                 </div>
+
                 <div class="batalla-centro">
                     <i class="fa-solid fa-khanda icono-espadas"></i>
+
                     <div class="twitch-tooltip">
-                        <p>Escribe <strong>A</strong> para votar Canción A</p>
-                        <p>Escribe <strong>B</strong> para votar Canción B</p>
-                        <div class="twitch-icon-circle"><i class="fa-brands fa-twitch"></i></div>
+                        <p>Escribe <strong>A</strong> para votar <strong id="nombreVotaA">Canción A</strong></p>
+                        <p>Escribe <strong>B</strong> para votar <strong id="nombreVotaB">Canción B</strong></p>
+                        <i class="fa-brands fa-twitch" style="margin-top: 10px; font-size: 1.2rem; color: #b785ff;"></i>
                     </div>
                 </div>
+
                 <div class="contendiente" id="contendienteB">
                     <img src="" class="batalla-img" id="imgB">
                     <h3 class="batalla-title" id="tituloB">Canción B</h3>
+
+                    <div class="player-ui" style="width: 100%; margin-bottom: 15px;">
+                        <audio id="audioBatallaB" src=""></audio>
+                        <button class="play-btn" onclick="reproducirBatalla('B')"><i class="fa-solid fa-play"
+                                id="playIconBatallaB"></i></button>
+                        <div class="timeline" id="timelineBatallaB" style="cursor: pointer;">
+                            <div class="timeline-progress" id="progressBatallaB" style="width: 0%;"></div>
+                        </div>
+                        <span class="time-text" id="timeBatallaB"
+                            style="font-size: 0.75rem; color: var(--text-muted);">0:00 / 0:00</span>
+                    </div>
+
                     <button class="btn-vencedor" id="btnGanadorB">VENCEDOR</button>
                 </div>
             </div>
