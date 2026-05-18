@@ -4,6 +4,25 @@ let cancionSonandoId = null;
 // === INICIALIZACIÓN DEL REPRODUCTOR DE AUDIO ===
 document.addEventListener('DOMContentLoaded', () => {
     const volumeSlider = document.querySelector('.volume-slider');
+    // === TRUCO MÁGICO: Convertir inputs de nota en botones para el Dashboard ===
+    document.querySelectorAll('.card').forEach(card => {
+        const id = card.id.replace('cancion', '');
+        const inputs = card.querySelectorAll('.score-input');
+        
+        if (inputs.length >= 2) {
+            // Input de Ari
+            inputs[0].readOnly = true;
+            inputs[0].style.cursor = 'pointer';
+            inputs[0].onclick = () => abrirDashboard(id);
+            inputs[0].id = 'inputAri' + id;
+            
+            // Input de Luismi
+            inputs[1].readOnly = true;
+            inputs[1].style.cursor = 'pointer';
+            inputs[1].onclick = () => abrirDashboard(id);
+            inputs[1].id = 'inputLuismi' + id;
+        }
+    });
     if (volumeSlider) {
         volumeSlider.addEventListener('input', function (e) {
             const volumen = e.target.value / 100;
@@ -162,9 +181,12 @@ window.onclick = function (event) {
     let modalLetra = document.getElementById('lyricsModal');
     let modalBatalla = document.getElementById('batallaModal');
     let modalGanador = document.getElementById('winnerModal');
+    let modalDashboard = document.getElementById('scoreDashboardModal'); // <--- NUEVO
+    
     if (event.target == modalLetra) cerrarLetra();
     if (event.target == modalBatalla) cerrarBatalla();
     if (event.target == modalGanador) cerrarGanador();
+    if (event.target == modalDashboard) cerrarDashboard(); // <--- NUEVO
 }
 
 // === ACTUALIZAR NOTAS (50% Ari / 50% Luismi) ===
@@ -477,4 +499,80 @@ function cerrarGanador() {
     let audioGanador = document.getElementById('winnerAudio');
     audioGanador.pause();
     audioGanador.currentTime = 0;
+}
+
+// =========================================================================
+// === LÓGICA DEL DASHBOARD DE PUNTUACIÓN ===
+// =========================================================================
+let currentDashboardSongId = null;
+
+function abrirDashboard(id) {
+    currentDashboardSongId = id;
+    const card = document.getElementById('cancion' + id);
+    
+    // 1. Coger el título de la canción para el panel
+    const titulo = card.querySelector('.song-title').innerText;
+    document.getElementById('dashSongTitle').innerText = titulo;
+
+    // 2. Coger las notas actuales (si ya las había) o ponerlas a 0
+    const valAri = document.getElementById('inputAri' + id).value || 0;
+    const valLuismi = document.getElementById('inputLuismi' + id).value || 0;
+
+    // 3. Colocar los sliders en su posición
+    document.getElementById('dashAriRange').value = valAri;
+    document.getElementById('dashLuismiRange').value = valLuismi;
+
+    // 4. Actualizar visualmente los colores y números
+    updateDashboardLive();
+
+    // 5. Abrir el modal
+    document.getElementById('scoreDashboardModal').style.display = 'flex';
+}
+
+function cerrarDashboard() {
+    document.getElementById('scoreDashboardModal').style.display = 'none';
+    currentDashboardSongId = null;
+}
+
+function updateDashboardLive() {
+    const ariRange = document.getElementById('dashAriRange');
+    const luismiRange = document.getElementById('dashLuismiRange');
+    
+    const ariVal = parseFloat(ariRange.value).toFixed(1);
+    const luismiVal = parseFloat(luismiRange.value).toFixed(1);
+
+    // Actualizar los carteles azules con los números (Ej: 6.5)
+    document.getElementById('dashAriVal').innerText = ariVal;
+    document.getElementById('dashLuismiVal').innerText = luismiVal;
+
+    // Truco visual: Rellenar la barra de azul justo hasta donde está el punto blanco
+    const ariPercent = (ariVal / 10) * 100;
+    ariRange.style.background = `linear-gradient(to right, #007bff ${ariPercent}%, #4a5c55 ${ariPercent}%)`;
+
+    const luismiPercent = (luismiVal / 10) * 100;
+    luismiRange.style.background = `linear-gradient(to right, #007bff ${luismiPercent}%, #4a5c55 ${luismiPercent}%)`;
+
+    // Calcular la media en vivo (50% Ari / 50% Luismi)
+    const media = ((parseFloat(ariVal) * 0.5) + (parseFloat(luismiVal) * 0.5)).toFixed(1);
+    document.getElementById('dashMediaVal').innerText = media;
+}
+
+function guardarDashboard() {
+    if (!currentDashboardSongId) return;
+
+    // Coger los valores finales del slider
+    const ariVal = parseFloat(document.getElementById('dashAriRange').value).toFixed(1);
+    const luismiVal = parseFloat(document.getElementById('dashLuismiRange').value).toFixed(1);
+    const mediaFinal = document.getElementById('dashMediaVal').innerText;
+
+    // Inyectarlos en las casillas originales de la tarjeta de la canción
+    document.getElementById('inputAri' + currentDashboardSongId).value = ariVal;
+    document.getElementById('inputLuismi' + currentDashboardSongId).value = luismiVal;
+    
+    // Inyectar la media final en el cuadro verde
+    const card = document.getElementById('cancion' + currentDashboardSongId);
+    card.querySelector('.final-score').innerText = mediaFinal;
+
+    // Cerrar el dashboard
+    cerrarDashboard();
 }

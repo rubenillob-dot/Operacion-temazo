@@ -872,3 +872,89 @@ header h1 {
 .animacion-finalista {
     animation: aparecerFinalista 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
+
+/* =========================================
+   DASHBOARD DE PUNTUACIÓN (SLIDERS)
+   ========================================= */
+.slider-wrapper {
+    background-color: #122230;
+    border-radius: 12px;
+    padding: 25px;
+    margin-bottom: 25px;
+    box-shadow: inset 0 2px 10px rgba(0,0,0,0.3);
+}
+
+.slider-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #e0e6ed;
+    margin-bottom: 20px;
+}
+
+.slider-value-badge {
+    background-color: #007bff;
+    color: white;
+    padding: 6px 20px;
+    border-radius: 8px;
+    font-size: 1.6rem;
+    font-weight: 900;
+    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4);
+}
+
+.range-container {
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.custom-range {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 14px;
+    background: #4a5c55; /* Fondo gris base */
+    border-radius: 7px;
+    outline: none;
+    cursor: pointer;
+}
+
+.custom-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 5px solid #007bff;
+    cursor: pointer;
+    box-shadow: 0 0 15px rgba(0,0,0,0.6);
+    transition: transform 0.1s;
+}
+
+.custom-range::-webkit-slider-thumb:hover {
+    transform: scale(1.15);
+}
+
+.range-ticks {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+    color: #8b9d96;
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 0 8px;
+}
+
+.dash-result {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: #fff;
+    background: #061118;
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid #1ed760;
+    box-shadow: 0 0 20px rgba(30, 215, 96, 0.1);
+}
